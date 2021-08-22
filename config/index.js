@@ -3,6 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const {config} = require("shelljs");
 
 module.exports = {
   dev: {
@@ -10,17 +11,28 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      proxy: {
+        // detail: https://cli.vuejs.org/config/#devserver-proxy
+        [process.env.VUE_APP_BASE_API]: {
+          target: "http://localhost:8080",
+          changeOrigin: true,
+          pathRewrite: {
+            ['^' + process.env.VUE_APP_BASE_API]: ''
+          }
+        },
+      },
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: false,
+    port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */

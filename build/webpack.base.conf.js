@@ -7,9 +7,6 @@ const vueLoaderConfig = require('./vue-loader.conf')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
-
-
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
@@ -35,6 +32,21 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
+      },
+      {
+        test: /\.s(c|a)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            // Requires >= sass-loader@^8.0.0
+            options: {
+              implementation: require('sass'),
+              indentedSyntax: true // optional
+            },
+          },
+        ],
       },
       {
         test: /\.js$/,
