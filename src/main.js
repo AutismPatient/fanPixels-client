@@ -6,6 +6,8 @@ import router from './router'
 import vuetify from '@/plugins/vuetify'
 import '@/assets/js/filter'
 
+import "@/assets/css/index.scss"
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
