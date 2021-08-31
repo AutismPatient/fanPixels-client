@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import demo from "../views/home/index";
+import home from "../views/home/index";
 import helloWorld from "../views/HelloWorld"
 
 Vue.use(Router)
@@ -9,15 +9,15 @@ Vue.use(Router)
 const routes = [
   {
     name: 'test',
-    path: "/",
+    path: "/hello",
     meta: {title: '你好世界', icon: ''},
     component: helloWorld,
   },
   {
-    name: 'demo',
-    path: '/demo',
-    meta: {title: "demo"},
-    component: demo
+    name: 'index',
+    path: '/',
+    meta: {title: "首页"},
+    component: home
   }
 ]
 

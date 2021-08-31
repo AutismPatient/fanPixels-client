@@ -1,5 +1,6 @@
+<!--首页-->
 <template>
-  <v-app id="inspire" class="fp-main">
+  <v-app>
     <!-- 导航栏  -->
     <bar />
     <!-- 内容主体   -->
