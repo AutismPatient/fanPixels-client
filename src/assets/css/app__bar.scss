@@ -32,8 +32,18 @@
     .v-btn__content{
       font-size: 17px;
     }
-    .app-bar--sub--list{
-      font-size: 14px;
+  }
+
+  .app-bar--sub--list{
+    .v-subheader{
+      height: 20px;
+      color: black!important;
+      padding: 14px;
+      padding-left: 24px;
+    }
+    .v-btn{
+      padding:0 8px;
+      justify-content: left;
     }
   }
 }
