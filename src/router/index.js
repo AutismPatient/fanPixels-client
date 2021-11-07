@@ -1,23 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import home from "../views/home/index";
-import helloWorld from "../views/HelloWorld"
+import home from "../views/home/index"
+import homeLayout from '@/layout/HomeLayout'
 
 Vue.use(Router)
 
 const routes = [
   {
-    name: 'test',
-    path: "/hello",
-    meta: {title: '你好世界', icon: ''},
-    component: helloWorld,
-  },
-  {
-    name: 'index',
+    name: 'layout',
     path: '/',
-    meta: {title: "首页"},
-    component: home
+    component: homeLayout,
+    redirect: 'index',
+    children: [
+      {
+        path: '/index',
+        component: home,
+        name: '首页',
+        meta: {title: '首页'}
+      }
+    ]
   }
 ]
 

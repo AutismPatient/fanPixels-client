@@ -11,26 +11,16 @@
     }
   }
   .logo-text{
-    color: white;
-    margin-left: 1rem;
     font-weight: 600;
-    font-size: 20px;
-    vertical-align: middle;
-    letter-spacing: 2px;
-
-    text-shadow: 0 0 0px #fff,
-    0 0 4px #fff;
-
-    transition: all 1s;
-
-    &:hover{
-      text-shadow: 0 0 0px #fff,
-      0 0 4px #fff,0 0 8px #fff,0 0 16px #fff;
-    }
+    font-family: "Colonna MT", cursive;
+    color: rgba(94,86,105,.87)!important;
+    letter-spacing: 0.3px;
+    font-size: 1.2rem;
+    line-height: 1;
   }
   .app-bar--sub{
     .v-btn__content{
-      font-size: 17px;
+      //font-size: 17px;
     }
   }
 
@@ -38,8 +28,8 @@
     .v-subheader{
       height: 20px;
       color: black!important;
-      padding: 14px;
-      padding-left: 24px;
+      padding: 14px 14px 14px 24px;
+      margin-top: 8px;
     }
     .v-btn{
       padding:0 8px;

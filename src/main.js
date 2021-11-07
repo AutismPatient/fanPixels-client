@@ -5,8 +5,9 @@ import App from './App'
 import router from './router'
 import vuetify from '@/plugins/vuetify'
 import '@/assets/js/filter'
+import store from "@/store"
 
-import "@/assets/css/index.scss"
+import '@/assets/css/index.scss'
 
 Vue.config.productionTip = false
 
@@ -15,5 +16,6 @@ new Vue({
   vuetify,
   router,
   components: { App },
+  store,
   template: '<App/>'
 }).$mount('#app')

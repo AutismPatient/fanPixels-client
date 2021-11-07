@@ -3,7 +3,11 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const {config} = require("shelljs");
+const {config} = require("shelljs")
+
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 
 module.exports = {
   dev: {
@@ -44,15 +48,16 @@ module.exports = {
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
 
-    cssSourceMap: true
+    cssSourceMap: true,
+
   },
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: resolve('../dist/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsRoot: resolve('../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 
