@@ -1,4 +1,6 @@
-.fp-main{
+// 默认主题样式
+.fp-main .theme--light{
+  // logo 区
   .logo-span{
     //font-family: fantasy;
     font-size: 26px;
@@ -18,22 +20,47 @@
     font-size: 1.2rem;
     line-height: 1;
   }
+  // 右导航内容区
   .app-bar--sub{
-    .v-btn__content{
-      //font-size: 17px;
+    .text--secondary{
+      color: rgba(0,0,0,.6)!important;
     }
   }
-
+  // 弹出层
   .app-bar--sub--list{
     .v-subheader{
       height: 20px;
-      color: black!important;
-      padding: 14px 14px 14px 24px;
-      margin-top: 8px;
+      padding: 14px 14px 14px 16px;
     }
     .v-btn{
       padding:0 8px;
       justify-content: left;
+    }
+    .v-list-item{
+      padding: 0 8px;
+    }
+  }
+  .bar-msg{
+    .v-toolbar__title{
+      font-size: unset !important;
+    }
+    .bar-msg--subtitle{
+      font-size: .75rem;
+      color: burlywood;
+    }
+  }
+  .drawer_content{
+    .v-navigation-drawer__content{
+      .v-sheet--outlined.v-sheet--outlined{
+        border: none !important;
+        border-bottom:1px solid rgba(0,0,0,.12)!important;
+        box-shadow: none;
+      }
+    }
+    .drawer_content--sub--title{
+      .v-subheader {
+        font-weight: bolder;
+      }
     }
   }
 }

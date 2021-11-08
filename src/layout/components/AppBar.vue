@@ -9,14 +9,15 @@
       <!--  间隔片  -->
       <v-spacer></v-spacer>
       <!--  右导航内容   -->
-      <div class="app-bar--sub">
-        <v-menu transition="slide-y-transition" offset-y left>
+      <div class="app-bar--sub app-nav--content">
+        <!--  探索      -->
+        <v-menu transition="slide-y-transition" offset-y left open-on-hover>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text color="secondary" v-bind="attrs" v-on="on">
+            <v-btn text color="secondary" v-bind="attrs" v-on="on" class="text--secondary">
               探索
             </v-btn>
           </template>
-          <v-sheet class="app-bar--sub--list" elevation="4" rounded>
+          <v-sheet class="app-bar--sub--list" rounded>
             <v-list dense max-width="200px">
               <v-subheader class="font-weight-black">探索发现</v-subheader>
               <v-list-item>
@@ -46,14 +47,15 @@
             </v-list>
           </v-sheet>
         </v-menu>
-        <v-menu transition="slide-y-transition" offset-y left>
+        <!--  许可证      -->
+        <v-menu transition="slide-y-transition" offset-y left open-on-hover>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on">
+            <v-btn text v-bind="attrs" v-on="on" class="text--secondary">
               许可证
             </v-btn>
           </template>
-          <v-sheet class="app-bar--sub--list" elevation="4" rounded>
-            <v-list dense max-width="200px">
+          <v-sheet class="app-bar--sub--list" rounded>
+            <v-list dense width="100px">
               <v-subheader class="font-weight-black">FanPixels</v-subheader>
               <v-list-item>
                 <v-list-item-content>
@@ -65,20 +67,71 @@
             </v-list>
           </v-sheet>
         </v-menu>
+        <!--  我的消息      -->
         <v-menu transition="slide-y-transition" offset-y left>
           <template v-slot:activator="{ on, attrs }">
             <v-btn text v-bind="attrs" v-on="on" icon>
               <v-icon size="24">mdi-bell-badge-outline</v-icon>
             </v-btn>
           </template>
-          <v-sheet class="app-bar--sub--list" elevation="4" rounded>
+          <v-sheet class="bar-msg" roundedc max-width="500px">
+            <v-toolbar color="primary" dark short>
+              <v-toolbar-title>我的消息 （15 未读）</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon>mdi-expand-all</v-icon>
+                  </v-btn>
+                </template>
+                <span>查看全部</span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on" @click.stop="dialogMessage = true">
+                    <v-icon>mdi-checkbox-marked-circle</v-icon>
+                  </v-btn>
+                </template>
+                <span>全部已读</span>
+              </v-tooltip>
+            </v-toolbar>
+            <v-list two-line dense>
+              <v-list-item-group>
+                <template v-for="(item, index) in messageData">
+                  <v-list-item :key="item.title">
+                    <template v-slot:default="{ active }">
+                      <v-list-item-content>
+                        <v-list-item-title v-text="item.title"></v-list-item-title>
 
+                        <v-list-item-subtitle
+                          class="bar-msg--subtitle"
+                          v-text="item.headline"
+                        ></v-list-item-subtitle>
+
+                        <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                      </v-list-item-content>
+
+                      <v-list-item-action>
+                        <v-list-item-action-text v-text="item.action"></v-list-item-action-text>
+                      </v-list-item-action>
+                    </template>
+                  </v-list-item>
+
+                  <v-divider
+                    v-if="index < messageData.length - 1"
+                    :key="index"
+                  ></v-divider>
+                </template>
+              </v-list-item-group>
+            </v-list>
           </v-sheet>
         </v-menu>
-        <v-btn text icon>
+        <!--  系统设置      -->
+        <v-btn text icon @click="showDrawer = true">
           <v-icon size="24">mdi-cog-outline</v-icon>
         </v-btn>
-        <v-menu transition="slide-y-transition" offset-y left>
+        <!--  个人信息      -->
+        <v-menu transition="slide-y-transition" v-if="isLogin" offset-y left>
           <template v-slot:activator="{ on, attrs }">
             <v-btn text v-bind="attrs" v-on="on" icon>
               <v-avatar
@@ -88,8 +141,8 @@
                 alt="猪大肠"></v-avatar>
             </v-btn>
           </template>
-          <v-sheet class="app-bar--sub--list" elevation="4" rounded>
-            <v-list dense max-width="200px">
+          <v-sheet class="app-bar--sub--list" elevation="1" rounded>
+            <v-list dense width="160px">
               <v-subheader class="font-weight-black">猪大肠 <br/> (1010014622@qq.com)</v-subheader>
               <v-list-item>
                 <v-list-item-content>
@@ -101,7 +154,7 @@
               </v-list-item>
               <v-divider class="mt-3 mb-2 ml-2 mr-n2"></v-divider>
               <v-list-item>
-                <v-list-item-content>
+                <v-list-item-content class="pb-0">
                   <v-btn block text small color="error">注销当前账户</v-btn>
                 </v-list-item-content>
               </v-list-item>
@@ -109,20 +162,135 @@
           </v-sheet>
         </v-menu>
 
-        <v-btn depressed outlined color="indigo" small  class="ml-2">
-          上传内容
+        <!--  登录或上传内容    -->
+        <v-btn depressed outlined color="indigo" small class="ml-2">
+          {{loginText}}
         </v-btn>
       </div>
     </v-app-bar>
+    <!-- 消息确认框   -->
+    <v-dialog
+      v-model="dialogMessage" persistent max-width="300px"
+    >
+      <v-card>
+        <v-card-title>
+          确认要清除所有未读消息吗?
+        </v-card-title>
 
+        <v-card-text>
+          包含 15 条未读消息
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="red darken-1"
+            text
+            @click="dialogMessage = false"
+          >
+            取消
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialogMessage = false"
+          >
+            确认
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- 系统设置导航抽屉   -->
+    <v-navigation-drawer width="300px" right fixed temporary hide-overlay flat v-model="showDrawer" class="drawer_content">
+      <v-toolbar outlined>
+        <v-toolbar-title>
+          个性化设置
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="showDrawer = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <div>
+        <div class="drawer_content--sub--title">
+          <v-subheader>系统字体</v-subheader>
+        </div>
+        <v-btn-toggle class="pl-3 pr-3" v-model="toggleFont" color="primary" group>
+          <v-btn :value="fontList[0]" large>
+            默认
+            <v-icon>mdi-format-size</v-icon>
+          </v-btn>
+          <v-btn :value="fontList[1]" large>
+            宋体
+            <v-icon>mdi-format-font</v-icon>
+          </v-btn>
+        </v-btn-toggle>
+      </div>
+      <div class="mt-2 mb-3 mx-n3">
+        <v-divider></v-divider>
+      </div>
+      <div>
+        <div class="drawer_content--sub--title">
+          <v-subheader>主题</v-subheader>
+        </div>
+        <v-btn-toggle class="pl-3 pr-3" style="display: inline-block" v-model="toggleTheme" color="primary" group background-color="#ddd">
+          <v-btn :value="themeList[0]" large>
+            浅色主题
+            <v-icon>mdi-white-balance-sunny</v-icon>
+          </v-btn>
+          <v-btn :value="themeList[1]" large>
+            黑色主题
+            <v-icon>mdi-weather-night</v-icon>
+          </v-btn>
+          <v-btn :value="themeList[2]" large>
+            跟随系统
+            <v-icon>mdi-weather-night</v-icon>
+          </v-btn>
+          <v-btn :value="themeList[3]" large>
+            混合主题
+            <v-icon>mdi-theme-light-dark</v-icon>
+          </v-btn>
+        </v-btn-toggle>
+      </div>
+      <div class="mt-2 mb-3 mx-n3"><v-divider></v-divider></div>
+      <div class="pl-3 pr-3">
+        <v-btn block color="primary">
+          重新恢复默认
+        </v-btn>
+      </div>
+    </v-navigation-drawer>
   </div>
 </template>
-<style lang="scss" src="@/assets/css/app__bar.scss"></style>
+<style lang="scss" src="../../assets/css/app__bar.scss"></style>
 <script>
 export default {
   name: "AppBar",
   data: () => ({
-
+    messageData: [
+      {
+        action: '15 分钟前',
+        headline: '来自 YU-889',
+        subtitle: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+        title: '永续合约止盈止损触发提醒【统一账户】',
+      }
+    ],
+    isLogin: true,
+    loginText: '上传内容',
+    dialogMessage: false,
+    showDrawer: false,
+    toggleFont: 'system',
+    fontList: [
+      'system','simSun'
+    ],
+    toggleTheme: 'light',
+    themeList: [
+      'light',
+      'dark',
+      'system',
+      'mixture'
+    ]
   }),
   mounted() {
   },
