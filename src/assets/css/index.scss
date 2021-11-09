@@ -1,9 +1,110 @@
-body{
+body {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: Quicksand,sans-serif;
+  font-family: Quicksand, sans-serif;
 }
-a{
+
+a {
   text-decoration: none !important;
+}
+
+// 搜索框组件样式
+.search-bar--main {
+  margin-top: 25px;
+  position: relative;
+
+  .v-input__slot {
+    z-index: 25;
+  }
+
+  // 弹出区域
+  .search-bar--focus_card {
+    z-index: 24;
+    position: absolute;
+    width: 100%;
+    top: 36px;
+    left: 0;
+
+    .focus_card--content {
+      .v-subheader {
+        height: auto;
+        font-weight: bolder;
+      }
+      .v-card{
+        border-color: #e8e8e8;
+        cursor:pointer;
+        &:hover{
+          background: #e8e8e8;
+        }
+      }
+      .v-btn{
+        border-radius: 20px;
+        padding: .4rem !important;
+        padding-right: 1.85rem !important;
+        margin-bottom: 1rem!important;
+        margin-right: 1rem!important;
+        background-color: white;
+        border: none;
+        color: #5e5e5e;
+        font-size: 15px;
+        height: auto;
+        font-weight: 700;
+        &:hover{
+          box-shadow: none;
+        }
+      }
+      .search-bar_collection__images {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 2px;
+        max-width: 44px;
+        max-height: 44px;
+        border-radius: 4px;
+        margin-right: .75rem;
+        overflow: hidden;
+
+        & > img {
+          max-width: 100%;
+        }
+
+        & > img:first-child {
+          grid-column: span 2;
+        }
+      }
+
+      .search-bar_collection__text {
+        color: #1a1a1a;
+        margin-bottom: 2px;
+        display: inline;
+
+        .search-bar_collection__text__title {
+          display: block;
+          font-size: 16px;
+          line-height: 25px;
+          font-weight: 600;
+          margin-top: 0;
+          margin-bottom: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .search-bar_collection__text__subtitle {
+          display: block;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 300;
+          margin-top: 0;
+          margin-bottom: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: #5e5e5e;
+        }
+      }
+
+      padding-bottom: 14px;
+      padding-top: 14px;
+      border-bottom: 1px solid #e3e3e3;
+    }
+  }
 }

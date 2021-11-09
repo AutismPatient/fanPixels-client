@@ -1,13 +1,15 @@
 <template>
   <div>
     <!--  导航栏  -->
-    <v-app-bar app flat light>
+    <v-app-bar app flat light color="white">
       <!--  LOGO   -->
       <a href="/">
-        <span class="logo-text">FAN PIXELS</span>
+        <span class="logo-text">FAN <br /> PIXELS</span>
       </a>
       <!--  间隔片  -->
       <v-spacer></v-spacer>
+      <SearchBar />
+      <v-divider inset vertical class="mr-5 ml-5 mt-5" style="height: 16px"></v-divider>
       <!--  右导航内容   -->
       <div class="app-bar--sub app-nav--content">
         <!--  探索      -->
@@ -163,7 +165,7 @@
         </v-menu>
 
         <!--  登录或上传内容    -->
-        <v-btn depressed outlined color="indigo" small class="ml-2">
+        <v-btn depressed color="primary" small class="ml-2">
           {{loginText}}
         </v-btn>
       </div>
@@ -256,7 +258,7 @@
       </div>
       <div class="mt-2 mb-3 mx-n3"><v-divider></v-divider></div>
       <div class="pl-3 pr-3">
-        <v-btn block color="primary">
+        <v-btn block color="primary" depressed>
           重新恢复默认
         </v-btn>
       </div>
@@ -265,8 +267,12 @@
 </template>
 <style lang="scss" src="../../assets/css/app__bar.scss"></style>
 <script>
+import SearchBar from '@/layout/components/SearchBar'
 export default {
   name: "AppBar",
+  components: {
+    SearchBar
+  },
   data: () => ({
     messageData: [
       {
