@@ -13,7 +13,6 @@ a {
 .search-bar--main {
   margin-top: 25px;
   position: relative;
-
   .v-input__slot {
     z-index: 25;
   }
@@ -23,8 +22,15 @@ a {
     z-index: 24;
     position: absolute;
     width: 100%;
-    top: 36px;
     left: 0;
+
+
+    &.un-clear__top{
+      top: 36px;
+    }
+    &.clear__top{
+      top: 42px;
+    }
 
     .focus_card--content {
       .v-subheader {
@@ -105,6 +111,10 @@ a {
       padding-bottom: 14px;
       padding-top: 14px;
       border-bottom: 1px solid #e3e3e3;
+
+      &:last-child{
+        border-bottom: none;
+      }
     }
   }
 }

@@ -1,53 +1,63 @@
 <!-- 搜索框 通用 -->
 <template>
-  <div :class="['search-bar--main',isBar ? 'mr-5':'']">
+  <div :class="['search-bar--main',isBar ? 'mr-5':'']" ref="showPanel">
     <!-- 输入框   -->
-    <v-text-field color="primary" @focus="isFocus = true"
+    <v-text-field color="primary" @focus.stop="isFocus = true"
                   v-model="query" :dense="isBar"
-                  :placeholder="placeholder" :style="{width: width + 'px'}"
+                  :placeholder="placeholder" :style="{width: isSlow ? '100%':width + 'px'}"
                   :solo="!outlined"
-                  clearable :outlined="outlined" :append-icon="icon"
+                  :outlined="outlined" :append-icon="icon" @keyup.enter="submit"
     ></v-text-field>
     <!-- 弹出区  -->
-    <v-card elevation="2" class="search-bar--focus_card" v-show="isFocus">
-      <div class="focus_card--content">
-        <v-subheader>最近搜索  <v-icon class="ml-1" small>mdi-close-circle</v-icon></v-subheader>
-        <div class="ml-2 mr-2 mt-2">
-          <v-chip class="ma-2" v-for="(value,index) in searchHistory" :key="value"
-                  small
-                  @click:close="clearHistory">
-            {{ value }}
-          </v-chip>
+    <v-scroll-y-transition>
+      <v-card elevation="2" :class="['search-bar--focus_card',!isBar ? 'clear__top': 'un-clear__top']" v-show="isFocus">
+        <div class="focus_card--content">
+          <v-subheader>最近搜索
+            <v-icon class="ml-1" small style="cursor: pointer">mdi-close-circle</v-icon>
+          </v-subheader>
+          <div class="ml-2 mr-2 mt-2">
+            <v-chip class="ma-2" v-for="(value,index) in searchHistory" :key="value"
+                    small
+                    @click.stop:close="clearHistory">
+              {{ value }}
+            </v-chip>
+          </div>
         </div>
-      </div>
-      <div class="focus_card--content">
-        <v-subheader>热门收藏夹</v-subheader>
-        <div class="ml-2 mr-2">
-          <v-row class="ma-0">
-            <v-col cols="12" sm="6" style="padding-right: 0!important;padding-left: 6px!important;" v-for="item in favorites" :key="item.title">
-              <v-card outlined rounded class="pa-2 d-flex">
-                <div class="search-bar_collection__images">
-                  <img v-for="img in item.images" :key="img.path" :src="img.path" alt="img.name"/>
-                </div>
-                <div class="search-bar_collection__text">
-                  <div class="js-search-bar-collection-title search-bar_collection__text__title">{{item.title}}</div>
-                  <div class="js-search-bar-collection-subtitle search-bar_collection__text__subtitle">{{item.sumTitle}}</div>
-                </div>
-              </v-card>
-            </v-col>
-          </v-row>
+        <div class="focus_card--content">
+          <v-subheader>热门收藏夹</v-subheader>
+          <div class="ml-2 mr-2">
+            <v-row class="ma-0">
+              <v-col cols="12" sm="6" style="padding-right: 0!important;padding-left: 6px!important;"
+                     v-for="item in favorites" :key="item.title">
+                <v-card outlined rounded class="pa-2 d-flex">
+                  <div class="search-bar_collection__images">
+                    <img v-for="img in item.images" :key="img.path" :src="img.path" alt="img.name"/>
+                  </div>
+                  <div class="search-bar_collection__text">
+                    <div class="js-search-bar-collection-title search-bar_collection__text__title">{{
+                        item.title
+                      }}
+                    </div>
+                    <div class="js-search-bar-collection-subtitle search-bar_collection__text__subtitle">
+                      {{ item.sumTitle }}
+                    </div>
+                  </div>
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
         </div>
-      </div>
-      <div class="focus_card--content">
-        <v-subheader>人气主题</v-subheader>
-        <div class="ml-2 mr-2 pt-2">
-          <v-btn x-large v-for="item in tagList" :key="item.name">
-            <v-avatar class="mr-2"><img :src="item.img" :alt="item.name"></v-avatar>
-            {{item.name}}
-          </v-btn>
+        <div class="focus_card--content">
+          <v-subheader>人气主题</v-subheader>
+          <div class="ml-2 mr-2 pt-2">
+            <v-btn x-large v-for="item in tagList" :key="item.name">
+              <v-avatar class="mr-2"><img :src="item.img" :alt="item.name"></v-avatar>
+              {{ item.name }}
+            </v-btn>
+          </div>
         </div>
-      </div>
-    </v-card>
+      </v-card>
+    </v-scroll-y-transition>
   </div>
 </template>
 
@@ -62,6 +72,10 @@ export default {
     width: {
       type: Number,
       default: 550
+    },
+    isSlow: {
+      type: Boolean,
+      default: false
     },
     placeholder: {
       type: String,
@@ -128,6 +142,16 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    document.addEventListener('click', (e) => {
+      if (this.$refs.showPanel) {
+        let isSelf = this.$refs.showPanel.contains(e.target)
+        if (!isSelf) {
+          this.isFocus = false
+        }
+      }
+    })
   },
   methods: {
     submit() {
