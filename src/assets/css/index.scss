@@ -5,13 +5,18 @@ body {
   font-family: Quicksand, sans-serif;
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 a {
   text-decoration: none !important;
 }
 
 // 搜索框组件样式
 .search-bar--main {
-  margin-top: 25px;
   position: relative;
   .v-input__slot {
     z-index: 25;

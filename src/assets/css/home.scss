@@ -1,9 +1,104 @@
-.theme--light.v-application{
-  .home-main__content{
-    .banner__content{
-      .banner__content-sub{
+.theme--light.v-application {
+  .home-main__content {
+    // banner
+    .banner__content {
+      position: relative;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.18)), to(rgba(0, 0, 0, 0.18))), -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.18)), to(transparent));
+        z-index: 2;
+      }
+
+      .v-parallax {
+        z-index: unset;
+
+        .v-parallax__image {
+          background: #232a34;
+        }
+      }
+
+      .banner__content-sub {
         max-width: 650px;
         width: 100%;
+
+        .more__tags {
+          font-size: 14px;
+
+          ul {
+            display: inline-block;
+
+            li {
+              margin-left: .4rem;
+              font-weight: 300;
+              display: inline-block;
+
+              &:after {
+                content: ',';
+              }
+
+              &:last-child:after {
+                content: '';
+              }
+
+              a {
+                color: white;
+                opacity: .8;
+                transition: all .5s;
+
+                &:hover {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .banner__footer {
+        margin: 0 auto;
+        max-width: 1380px;
+        padding: 0 1.15rem;
+        overflow: hidden;
+        position: absolute;
+        bottom: 12px;
+        left: 0;
+        right: 0;
+
+        .v-btn {
+          font-weight: 700;
+          color: #5e5e5e;
+          padding: .35rem .8rem .35rem .35rem;
+          border-radius: 20px;
+          box-shadow: none;
+          height: auto;
+          background-color: white;
+        }
+      }
+    }
+
+    // 首页内容
+    .main__content{
+      .tab--content{
+        background-color: white;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.18);
+
+        .v-tab{
+          font-size: 17px;
+          font-weight: 600;
+          letter-spacing: .4px;
+        }
+      }
+      .list--content{
+        .v-subheader{
+          font-weight: 700;
+          font-size: 18px;
+        }
       }
     }
   }

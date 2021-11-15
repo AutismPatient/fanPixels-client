@@ -3,7 +3,7 @@
   <div :class="['search-bar--main',isBar ? 'mr-5':'']" ref="showPanel">
     <!-- 输入框   -->
     <v-text-field color="primary" @focus.stop="isFocus = true"
-                  v-model="query" :dense="isBar"
+                  v-model="query" :dense="isBar" hide-details="auto"
                   :placeholder="placeholder" :style="{width: isSlow ? '100%':width + 'px'}"
                   :solo="!outlined"
                   :outlined="outlined" :append-icon="icon" @keyup.enter="submit"
@@ -34,9 +34,7 @@
                     <img v-for="img in item.images" :key="img.path" :src="img.path" alt="img.name"/>
                   </div>
                   <div class="search-bar_collection__text">
-                    <div class="js-search-bar-collection-title search-bar_collection__text__title">{{
-                        item.title
-                      }}
+                    <div class="js-search-bar-collection-title search-bar_collection__text__title">{{ item.title }}
                     </div>
                     <div class="js-search-bar-collection-subtitle search-bar_collection__text__subtitle">
                       {{ item.sumTitle }}
