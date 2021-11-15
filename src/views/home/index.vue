@@ -43,10 +43,33 @@
               免费素材图片
             </v-subheader>
           </v-col>
-          <v-col md="4" align-self="right">
-
+          <v-col md="4" class="text-right">
+            <v-menu rounded="0">
+              <template v-slot:activator="{on,attr}">
+                <v-btn text v-on="on" v-bind="attr" tile>
+                  {{activeSort.title}}
+                  <v-icon class="ml-1">mdi-menu-down</v-icon>
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item-group color="primary" mandatory v-model="activeSort.query">
+                  <v-list-item v-for="item in sort" :key="item.query" link>
+                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-menu>
           </v-col>
         </v-row>
+        <!-- 图片视频区 -->
+        <div class="photos">
+          <!--  每一列   -->
+          <div class="photos__column">
+            <v-card class="mb-2">
+
+            </v-card>
+          </div>
+        </div>
       </v-container>
     </div>
   </v-main>
@@ -167,7 +190,21 @@ export default {
         query: '',
         path: ''
       }
-    ]
+    ],
+    sort: [
+      {
+        title: '热门人气',
+        query: 'hot'
+      },
+      {
+        title: '最新',
+        query: 'newest'
+      }
+    ],
+    activeSort: {
+      title: '热门人气',
+      query: 'hot'
+    }
   }),
   methods: {},
   mounted() {
