@@ -47,7 +47,7 @@
             <v-menu rounded="0">
               <template v-slot:activator="{on,attr}">
                 <v-btn text v-on="on" v-bind="attr" tile>
-                  {{activeSort.title}}
+                  {{ activeSort.title }}
                   <v-icon class="ml-1">mdi-menu-down</v-icon>
                 </v-btn>
               </template>
@@ -63,10 +63,17 @@
         </v-row>
         <!-- 图片视频区 -->
         <div class="photos">
-          <!--  每一列   -->
-          <div class="photos__column">
-            <v-card class="mb-2">
+          <!--  每一列(动态)  -->
+          <div class="photos__column" v-for="(item,i) in columnPhotos" :key="i">
+            <v-card v-for="(p,pi) in item.data" :key="pi">
+              <article :style="{paddingTop: (p.image.height / p.image.width) * 100 + '%'}">
+                <a href="#">
+                  <img :src="p.image.url" :alt="p.title"/>
+                </a>
+                <div class="photos__info">
 
+                </div>
+              </article>
             </v-card>
           </div>
         </div>
@@ -204,10 +211,131 @@ export default {
     activeSort: {
       title: '热门人气',
       query: 'hot'
-    }
+    },
+    photos: [],
+    columns: 4,
+    columnPhotos: []
   }),
-  methods: {},
+  methods: {
+    getPhotos() {
+      setTimeout(() => {
+        let res = [
+          {
+            title: '女人抱着婴儿在海边',
+            background: 'rgb(123,140,140)',
+            image: {
+              url: 'https://images.pexels.com/photos/1002536/pexels-photo-1002536.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 4256,
+              height: 2832
+            }
+          },
+          {
+            title: '白色和蓝色的花裙子，戴着棕色草帽的女人',
+            background: 'rgb(182,182,176)',
+            image: {
+              url: 'https://images.pexels.com/photos/3514426/pexels-photo-3514426.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 5386,
+              height: 3591
+            }
+          },
+          {
+            title: '灰色圆领上衣的男人',
+            background: 'rgb(146,140,134)',
+            image: {
+              url: 'https://images.pexels.com/photos/2888150/pexels-photo-2888150.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 6000,
+              height: 4000
+            }
+          },
+          {
+            title: '女人靠在铁路上的选择性聚焦摄影',
+            background: 'rgb(128,121,119)',
+            image: {
+              url: 'https://images.pexels.com/photos/2896820/pexels-photo-2896820.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 2738,
+              height: 1825
+            }
+          },
+          {
+            title: '一只孤独的鸟站在绿色和干燥植物之间的沙地上',
+            background: 'rgb(146,123,93)',
+            image: {
+              url: 'https://images.pexels.com/photos/3042612/pexels-photo-3042612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 2624,
+              height: 3936
+            }
+          },
+          {
+            title: '女人站在海岸线附近的沙滩上',
+            background: 'rgb(172,142,121)',
+            image: {
+              url: 'https://images.pexels.com/photos/320006/pexels-photo-320006.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 4256,
+              height: 2832
+            }
+          },
+          {
+            title: '女孩穿着豹子掩盖',
+            background: 'rgb(148,152,167)',
+            image: {
+              url: 'https://images.pexels.com/photos/768264/pexels-photo-768264.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 5760,
+              height: 3840
+            }
+          },
+          {
+            title: '白天躺在海边的红色垫子上的女人穿比基尼',
+            background: 'rgb(190,175,154)',
+            image: {
+              url: 'https://images.pexels.com/photos/745128/pexels-photo-745128.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 6000,
+              height: 4000
+            }
+          },
+          {
+            title: '几个站在海边',
+            background: 'rgb(196,172,160)',
+            image: {
+              url: 'https://images.pexels.com/photos/3030592/pexels-photo-3030592.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 5472,
+              height: 3648
+            }
+          },
+          {
+            title: '有关假期, 剪影, 地平線的免费素材图片',
+            background: 'rgb(127,116,98)',
+            image: {
+              url: 'https://images.pexels.com/photos/4078030/pexels-photo-4078030.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 7111,
+              height: 4743
+            }
+          },
+          {
+            title: '人们走在沙滩线附近',
+            background: 'rgb(143,154,151)',
+            image: {
+              url: 'https://images.pexels.com/photos/3586782/pexels-photo-3586782.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 6000,
+              height: 4000
+            }
+          }
+        ]
+        res.forEach((item) => {
+          this.photos.push(item)
+        })
+
+        let sum = Math.round(this.photos.length / this.columns)
+        for (let i = 0; i < this.columns; i++) {
+          this.columnPhotos.push({
+            index: i,
+            data: this.photos.slice(i * sum,(i * sum) + sum)
+          })
+        }
+      }, 1500)
+    }
+  },
   mounted() {
+    this.getPhotos()
   }
 }
 </script>
