@@ -215,7 +215,7 @@
 </template>
 <style lang="scss" src="../../assets/css/app__bar.scss"></style>
 <script>
-import SearchBar from '@/layout/components/SearchBar'
+import SearchBar from '@/components/search/SearchBar'
 import NavBarSetting from "@/layout/components/NavBarSetting"
 export default {
   name: "AppBar",

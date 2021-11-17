@@ -70,8 +70,24 @@
                 <a href="#">
                   <img :src="p.image.url" :alt="p.title"/>
                 </a>
-                <div class="photos__info">
-
+                <div class="photos__info d-flex align-center justify-space-between">
+                  <div class="author-info">
+                    <v-avatar size="30" class="mr-1">
+                      <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+                    </v-avatar>
+                    <span>Kseniya Kopna</span>
+                  </div>
+                  <div class="other-action">
+                    <v-btn icon>
+                      <v-icon>mdi-download</v-icon>
+                    </v-btn>
+                    <v-btn icon>
+                      <v-icon>mdi-plus-circle-outline</v-icon>
+                    </v-btn>
+                    <v-btn icon>
+                      <v-icon>mdi-cards-heart-outline</v-icon>
+                    </v-btn>
+                  </div>
                 </div>
               </article>
             </v-card>
@@ -85,7 +101,7 @@
 
 <script>
 
-import SearchBar from "@/layout/components/SearchBar";
+import SearchBar from "@/components/search/SearchBar";
 
 export default {
   name: 'index',
@@ -230,6 +246,15 @@ export default {
             }
           },
           {
+            title: '一只孤独的鸟站在绿色和干燥植物之间的沙地上',
+            background: 'rgb(146,123,93)',
+            image: {
+              url: 'https://images.pexels.com/photos/3042612/pexels-photo-3042612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 2624,
+              height: 3936
+            }
+          },
+          {
             title: '白色和蓝色的花裙子，戴着棕色草帽的女人',
             background: 'rgb(182,182,176)',
             image: {
@@ -254,15 +279,6 @@ export default {
               url: 'https://images.pexels.com/photos/2896820/pexels-photo-2896820.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
               width: 2738,
               height: 1825
-            }
-          },
-          {
-            title: '一只孤独的鸟站在绿色和干燥植物之间的沙地上',
-            background: 'rgb(146,123,93)',
-            image: {
-              url: 'https://images.pexels.com/photos/3042612/pexels-photo-3042612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-              width: 2624,
-              height: 3936
             }
           },
           {
@@ -323,15 +339,19 @@ export default {
         res.forEach((item) => {
           this.photos.push(item)
         })
-
-        let sum = Math.round(this.photos.length / this.columns)
+        this.setColumnPhotosData(this.photos)
+      }, 1500)
+    },
+    setColumnPhotosData(data){
+      if(data.length > 0){
+        let sum = Math.round(data.length / this.columns)
         for (let i = 0; i < this.columns; i++) {
           this.columnPhotos.push({
             index: i,
-            data: this.photos.slice(i * sum,(i * sum) + sum)
+            data: data.slice(i * sum,(i * sum) + sum)
           })
         }
-      }, 1500)
+      }
     }
   },
   mounted() {

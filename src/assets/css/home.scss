@@ -164,6 +164,32 @@
                 border-bottom-left-radius: 2px;
                 border-bottom-right-radius: 2px;
                 z-index: 2;
+                color: #e8e8e8;
+
+                .author-info,.other-action{
+                  padding-top: 24px;
+                  padding-right: 18px;
+                }
+
+                .author-info{
+                  cursor: pointer;
+                  padding-left: 18px;
+
+                  &>span{
+                    font-size: 14px;
+                  }
+                }
+
+                .other-action{
+                  .v-btn{
+                    color: #dfdfdf;
+
+                    &:hover{
+                      color: white;
+                    }
+                  }
+                }
+
               }
             }
           }
