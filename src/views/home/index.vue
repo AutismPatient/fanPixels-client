@@ -67,7 +67,7 @@
           <div class="photos__column" v-for="(item,i) in columnPhotos" :key="i">
             <v-card v-for="(p,pi) in item.data" :key="pi">
               <article :style="{paddingTop: (p.image.height / p.image.width) * 100 + '%'}">
-                <a href="#">
+                <a href="#" :style="{background: p.background}">
                   <img :src="p.image.url" :alt="p.title"/>
                 </a>
                 <div class="photos__info d-flex align-center justify-space-between">

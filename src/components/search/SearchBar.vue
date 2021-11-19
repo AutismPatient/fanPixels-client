@@ -86,7 +86,7 @@ export default {
     icon: {
       type: String,
       default: 'mdi-magnify'
-    }
+    },
   },
   data() {
     return {

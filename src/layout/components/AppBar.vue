@@ -1,21 +1,22 @@
 <template>
   <div>
     <!--  导航栏  -->
-    <v-app-bar app flat light color="white" fixed>
+    <v-app-bar app :flat="!showOffset && isOffset" light :absolute="!fixed" :fixed="fixed" :class="!showOffset && isOffset ? 'offset__class': ''"
+               :style="{backgroundColor: showOffset && isOffset ? '#fff':'transparent'}">
       <!--  LOGO   -->
       <a href="/">
-        <span class="logo-text">FAN <br /> PIXELS</span>
+        <span class="logo-text">FAN <br/> PIXELS</span>
       </a>
       <!--  间隔片  -->
       <v-spacer></v-spacer>
-      <SearchBar />
-      <v-divider inset vertical class="mr-5 ml-5 mt-5" style="height: 16px"></v-divider>
+      <SearchBar v-if="showOffset && isOffset"/>
+      <v-divider v-if="showOffset && isOffset" inset vertical class="mr-5 ml-5 mt-5" style="height: 16px"></v-divider>
       <!--  右导航内容   -->
       <div class="app-bar--sub app-nav--content">
         <!--  探索      -->
         <v-menu transition="slide-y-transition" offset-y left open-on-hover>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text color="secondary" v-bind="attrs" v-on="on" class="text--secondary">
+            <v-btn text :color="!showOffset && isOffset ? 'white': 'secondary'" v-bind="attrs" v-on="on">
               探索
             </v-btn>
           </template>
@@ -52,7 +53,7 @@
         <!--  许可证      -->
         <v-menu transition="slide-y-transition" offset-y left open-on-hover>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" class="text--secondary">
+            <v-btn text v-bind="attrs" v-on="on" :color="!showOffset && isOffset ? 'white': 'secondary'">
               许可证
             </v-btn>
           </template>
@@ -72,7 +73,7 @@
         <!--  我的消息      -->
         <v-menu transition="slide-y-transition" offset-y left>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" icon>
+            <v-btn text v-bind="attrs" v-on="on" icon :color="!showOffset && isOffset ? 'white': 'secondary'">
               <v-icon size="24">mdi-bell-badge-outline</v-icon>
             </v-btn>
           </template>
@@ -131,7 +132,7 @@
         <!--  系统设置      -->
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text icon @click="openSetting" v-bind="attrs" v-on="on">
+            <v-btn text icon @click="openSetting" v-bind="attrs" v-on="on" :color="!showOffset && isOffset ? 'white': 'secondary'">
               <v-icon size="24">mdi-cog-outline</v-icon>
             </v-btn>
           </template>
@@ -140,7 +141,7 @@
         <!--  个人信息      -->
         <v-menu transition="slide-y-transition" v-if="isLogin" offset-y left>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" icon>
+            <v-btn text v-bind="attrs" v-on="on" icon :color="!showOffset && isOffset ? 'white': 'secondary'">
               <v-avatar
                 size="24"
               ><img
@@ -171,7 +172,7 @@
 
         <!--  登录或上传内容    -->
         <v-btn depressed color="primary" small class="ml-2">
-          {{loginText}}
+          {{ loginText }}
         </v-btn>
       </div>
     </v-app-bar>
@@ -217,15 +218,20 @@
 <script>
 import SearchBar from '@/components/search/SearchBar'
 import NavBarSetting from "@/layout/components/NavBarSetting"
+
 export default {
   name: "AppBar",
   components: {
-    SearchBar,NavBarSetting
+    SearchBar, NavBarSetting
   },
   props: {
-    fixed: {
+    fixed: { // 布局形式是否为 fixed 否则为 absolute
       type: Boolean,
       default: true
+    },
+    isOffset: { // 是否开启程序滚动检测
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -240,12 +246,19 @@ export default {
     isLogin: true,
     loginText: '上传内容',
     dialogMessage: false,
+    showOffset: false // 显示控制
   }),
   mounted() {
   },
   methods: {
-    openSetting(){
+    openSetting() {
       this.$refs.setting.open()
+    },
+    offset() {
+      this.showOffset = true
+    },
+    closeOffset() {
+      this.showOffset = false
     }
   }
 }
