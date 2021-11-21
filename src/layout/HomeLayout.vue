@@ -12,26 +12,18 @@
 
 <script>
 import bar from './components/AppBar'
+import {getScrollTop} from '@/utils/directiveUtils'
 
 export default {
   name: "HomeLayout",
   components: {bar},
   methods: {
     onScroll(e) {
-      if (this.getScrollTop() > 300) {
+      if (getScrollTop(e.target) > 300) {
         this.$refs.app_bar.offset()
       } else {
         this.$refs.app_bar.closeOffset()
       }
-    },
-    getScrollTop(){
-      let scrollTop = 0
-      if (document.documentElement && document.documentElement.scrollTop) {
-        scrollTop = document.documentElement.scrollTop
-      } else if (document.body) {
-        scrollTop = document.body.scrollTop
-      }
-      return scrollTop
     }
   }
 }

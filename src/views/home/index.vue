@@ -21,7 +21,7 @@
             </div>
           </v-col>
         </v-row>
-        <div class="banner__footer">
+        <div class="banner__footer overflow-auto">
           <v-btn class="mr-2" v-for="item in tagList" :key="item.name" rounded>
             <v-avatar class="mr-2" size="30"><img :src="item.img" :alt="item.name"></v-avatar>
             {{ item.name }}
@@ -36,63 +36,8 @@
           <v-tab v-for="item in tabList" :key="item.title">{{ item.title }}</v-tab>
         </v-tabs>
       </div>
-      <v-container class="list--content mt-2">
-        <v-row justify="space-between">
-          <v-col md="4">
-            <v-subheader>
-              免费素材图片
-            </v-subheader>
-          </v-col>
-          <v-col md="4" class="text-right">
-            <v-menu rounded="0">
-              <template v-slot:activator="{on,attr}">
-                <v-btn text v-on="on" v-bind="attr" tile>
-                  {{ activeSort.title }}
-                  <v-icon class="ml-1">mdi-menu-down</v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item-group color="primary" mandatory v-model="activeSort.query">
-                  <v-list-item v-for="item in sort" :key="item.query" link>
-                    <v-list-item-title v-text="item.title"></v-list-item-title>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
-            </v-menu>
-          </v-col>
-        </v-row>
-        <!-- 图片视频区 -->
-        <div class="photos">
-          <!--  每一列(动态)  -->
-          <div class="photos__column" v-for="(item,i) in columnPhotos" :key="i">
-            <v-card v-for="(p,pi) in item.data" :key="pi">
-              <article :style="{paddingTop: (p.image.height / p.image.width) * 100 + '%'}">
-                <a href="#" :style="{background: p.background}">
-                  <img :src="p.image.url" :alt="p.title"/>
-                </a>
-                <div class="photos__info d-flex align-center justify-space-between">
-                  <div class="author-info">
-                    <v-avatar size="30" class="mr-1">
-                      <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
-                    </v-avatar>
-                    <span>Kseniya Kopna</span>
-                  </div>
-                  <div class="other-action">
-                    <v-btn icon>
-                      <v-icon>mdi-download</v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                      <v-icon>mdi-plus-circle-outline</v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                      <v-icon>mdi-cards-heart-outline</v-icon>
-                    </v-btn>
-                  </div>
-                </div>
-              </article>
-            </v-card>
-          </div>
-        </div>
+      <v-container class="mt-2">
+        <ColumnPhotos ref="column_photos" />
       </v-container>
     </div>
   </v-main>
@@ -102,10 +47,11 @@
 <script>
 
 import SearchBar from "@/components/search/SearchBar";
+import ColumnPhotos from '@/components/columnPhotos/index';
 
 export default {
   name: 'index',
-  components: {SearchBar},
+  components: {SearchBar, ColumnPhotos},
   data: () => ({
     recommends: [
       {
@@ -214,23 +160,7 @@ export default {
         path: ''
       }
     ],
-    sort: [
-      {
-        title: '热门人气',
-        query: 'hot'
-      },
-      {
-        title: '最新',
-        query: 'newest'
-      }
-    ],
-    activeSort: {
-      title: '热门人气',
-      query: 'hot'
-    },
-    photos: [],
-    columns: 4,
-    columnPhotos: []
+    photos: []
   }),
   methods: {
     getPhotos() {
@@ -339,20 +269,9 @@ export default {
         res.forEach((item) => {
           this.photos.push(item)
         })
-        this.setColumnPhotosData(this.photos)
+        this.$refs.column_photos.setColumnPhotosData(this.photos)
       }, 1500)
     },
-    setColumnPhotosData(data){
-      if(data.length > 0){
-        let sum = Math.round(data.length / this.columns)
-        for (let i = 0; i < this.columns; i++) {
-          this.columnPhotos.push({
-            index: i,
-            data: data.slice(i * sum,(i * sum) + sum)
-          })
-        }
-      }
-    }
   },
   mounted() {
     this.getPhotos()

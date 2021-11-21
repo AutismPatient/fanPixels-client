@@ -1,7 +1,7 @@
 <!-- 搜索框 通用 -->
 <template>
   <div :class="['search-bar--main',isBar ? 'mr-5':'']" ref="showPanel">
-    <!-- 输入框   -->
+    <!-- 输入框 -->
     <v-text-field color="primary" @focus.stop="isFocus = true"
                   v-model="query" :dense="isBar" hide-details="auto"
                   :placeholder="placeholder" :style="{width: isSlow ? '100%':width + 'px'}"
