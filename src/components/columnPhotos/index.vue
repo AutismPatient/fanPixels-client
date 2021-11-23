@@ -71,12 +71,17 @@ export default {
     lazy: { // 是否开启懒加载
       type: Boolean,
       default: true
+    },
+    list: {
+      type: Array,
+      default: () => []
     }
   },
   data: () => {
     return {
       columns: 4,
       columnPhotos: [],
+      clientWidth: document.body.clientWidth,
       activeSort: {
         title: '热门人气',
         query: 'hot'
@@ -94,10 +99,26 @@ export default {
     }
   },
   mounted() {
-
+    window.addEventListener('resize', this.onResize)
+  },
+  watch: {
+    columns: {
+      handler(newVal, oldVal) {
+        this.setColumnPhotosData(this.list, true)
+      }
+    },
+    list: {
+      handler(newVal, oldVal) {
+        this.setColumnPhotosData(newVal, true)
+      },
+      deep: true
+    }
   },
   methods: {
-    setColumnPhotosData(data) {
+    setColumnPhotosData(data, clear) {
+      if (clear) {
+        this.columnPhotos = []
+      }
       if (data.length > 0) {
         let sum = Math.round(data.length / this.columns)
         for (let i = 0; i < this.columns; i++) {
@@ -106,6 +127,16 @@ export default {
             data: data.slice(i * sum, (i * sum) + sum)
           })
         }
+      }
+    },
+    onResize(e) {
+      this.clientWidth = document.body.clientWidth
+      if (this.clientWidth < 1280) {
+        this.columns = 2
+      } else if (this.clientWidth > 1280 && this.clientWidth < 1883) {
+        this.columns = 3
+      } else {
+        this.columns = 4
       }
     }
   }

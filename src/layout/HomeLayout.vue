@@ -9,7 +9,6 @@
     </v-main>
   </v-app>
 </template>
-
 <script>
 import bar from './components/AppBar'
 import {getScrollTop} from '@/utils/directiveUtils'

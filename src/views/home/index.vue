@@ -37,7 +37,7 @@
         </v-tabs>
       </div>
       <v-container class="mt-2">
-        <ColumnPhotos ref="column_photos" />
+        <ColumnPhotos ref="column_photos" :list="photos"/>
       </v-container>
     </div>
   </v-main>
@@ -269,7 +269,6 @@ export default {
         res.forEach((item) => {
           this.photos.push(item)
         })
-        this.$refs.column_photos.setColumnPhotosData(this.photos)
       }, 1500)
     },
   },
