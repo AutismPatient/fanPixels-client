@@ -99,6 +99,7 @@ export default {
     }
   },
   mounted() {
+    this.judgeWidth(this.clientWidth)
     window.addEventListener('resize', this.onResize)
   },
   watch: {
@@ -112,6 +113,11 @@ export default {
         this.setColumnPhotosData(newVal, true)
       },
       deep: true
+    },
+    clientWidth: {
+      handler(n, o) {
+        this.judgeWidth(n)
+      }
     }
   },
   methods: {
@@ -131,9 +137,11 @@ export default {
     },
     onResize(e) {
       this.clientWidth = document.body.clientWidth
-      if (this.clientWidth < 1280) {
+    },
+    judgeWidth(w) {
+      if (w < 1280) {
         this.columns = 2
-      } else if (this.clientWidth > 1280 && this.clientWidth < 1883) {
+      } else if (w > 1280 && w < 1883) {
         this.columns = 3
       } else {
         this.columns = 4
