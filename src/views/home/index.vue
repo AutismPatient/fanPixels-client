@@ -37,7 +37,7 @@
         </v-tabs>
       </div>
       <v-container class="mt-2">
-        <ColumnPhotos ref="column_photos" :list="photos"/>
+        <ColumnPhotos ref="column_photos" :lazy="true" :list="photos" @getData="getPhotos"/>
       </v-container>
     </div>
   </v-main>
@@ -164,6 +164,7 @@ export default {
   }),
   methods: {
     getPhotos() {
+      this.$refs.column_photos.inLoading()
       setTimeout(() => {
         let res = [
           {
@@ -266,9 +267,8 @@ export default {
             }
           }
         ]
-        res.forEach((item) => {
-          this.photos.push(item)
-        })
+        this.photos = res
+        this.$refs.column_photos.unLoading()
       }, 1500)
     },
   },

@@ -1,6 +1,7 @@
 <!-- 通用瀑布流组件（响应式） -->
 <template>
-  <div class="column__photos-main">
+  <div class="column__photos-main"
+       v-scroll-load-more="{ body: true,handle: scrollFunc, name: '.column__photos-main > .photos',percent: 0.8}">
     <v-row justify="space-between">
       <v-col md="4">
         <v-subheader>
@@ -31,7 +32,7 @@
       <div class="photos__column" v-for="(item,i) in columnPhotos" :key="i">
         <v-card v-for="(p,pi) in item.data" :key="pi">
           <article :style="{paddingTop: (p.image.height / p.image.width) * 100 + '%'}">
-            <a href="#" :style="{background: p.background}">
+            <a :style="{background: p.background}">
               <img :src="p.image.url" :alt="p.title"/>
             </a>
             <div class="photos__info d-flex align-center justify-space-between">
@@ -56,6 +57,28 @@
           </article>
         </v-card>
       </div>
+    </div>
+    <!-- 底部加载区 -->
+    <div class="photos__loading pa-2" v-if="showMore && lazy && loading">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+    <div v-else-if="showMore && !lazy" class="ma-4">
+      <v-btn
+        block
+        :loading="loading"
+        :disabled="loading"
+        color="primary"
+        @click="getData"
+      >
+        加载更多数据
+        <template v-slot:loader>
+          <span>加载中...</span>
+        </template>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -95,7 +118,10 @@ export default {
           title: '最新',
           query: 'newest'
         }
-      ]
+      ],
+      showMore: false,
+      loading: false,
+      loader: null,
     }
   },
   mounted() {
@@ -110,7 +136,7 @@ export default {
     },
     list: {
       handler(newVal, oldVal) {
-        this.setColumnPhotosData(newVal, true)
+        this.setColumnPhotosData(newVal, false)
       },
       deep: true
     },
@@ -128,10 +154,19 @@ export default {
       if (data.length > 0) {
         let sum = Math.round(data.length / this.columns)
         for (let i = 0; i < this.columns; i++) {
-          this.columnPhotos.push({
-            index: i,
-            data: data.slice(i * sum, (i * sum) + sum)
-          })
+          let addData = data.slice(i * sum, (i * sum) + sum)
+          let u = this.columnPhotos[i]
+          console.log(u,addData)
+          if (u) {
+            addData.forEach(i => {
+              u.data.push(i)
+            })
+          } else {
+            this.columnPhotos.push({
+              index: i,
+              data: addData
+            })
+          }
         }
       }
     },
@@ -146,6 +181,21 @@ export default {
       } else {
         this.columns = 4
       }
+    },
+    scrollFunc() {
+      this.showMore = true
+      if (this.lazy && !this.loading)
+        this.getData()
+    },
+    inLoading() {
+      this.loading = true
+    },
+    unLoading() {
+      this.loading = false
+    },
+    getData() {
+      this.$emit("getData")
+      this.showMore = false
     }
   }
 }

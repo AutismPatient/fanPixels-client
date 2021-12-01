@@ -1,11 +1,12 @@
-
-// 获取滚动元素的 scrollTop
-export function getScrollTop(e){
-  let scrollTop = 0
-  if (e && e.documentElement.scrollTop) {
-    scrollTop = e.documentElement.scrollTop
+import VarUtils from '@/utils/strUtils'
+// 获取指定元素的值
+export function getTargetValue(e,binding){
+  binding = !VarUtils.isBlank(binding) ? binding: "scrollTop"
+  let value
+  if (e && e.documentElement[binding]) {
+    value = e.documentElement[binding]
   } else if (document.body) {
-    scrollTop = document.body.scrollTop
+    value = document.body[binding]
   }
-  return scrollTop
+  return value
 }

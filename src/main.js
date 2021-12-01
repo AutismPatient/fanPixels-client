@@ -9,6 +9,9 @@ import store from "@/store"
 
 import '@/assets/css/index.scss'
 
+import scrollLoadMore from './directive/scrollDirective'
+Vue.directive('scroll-load-more', scrollLoadMore)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

@@ -11,14 +11,14 @@
 </template>
 <script>
 import bar from './components/AppBar'
-import {getScrollTop} from '@/utils/directiveUtils'
+import {getTargetValue} from '@/utils/directiveUtils'
 
 export default {
   name: "HomeLayout",
   components: {bar},
   methods: {
     onScroll(e) {
-      if (getScrollTop(e.target) > 300) {
+      if (getTargetValue(e.target) > 300) {
         this.$refs.app_bar.offset()
       } else {
         this.$refs.app_bar.closeOffset()
