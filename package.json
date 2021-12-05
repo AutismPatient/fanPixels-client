@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "node-sass": "^4.0.0",
+    "v-viewer": "^1.6.4",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^2.6.0"

@@ -82,81 +82,18 @@
       </v-btn>
     </div>
 
-    <!-- 弹出框 -->
-    <v-dialog v-model="showDetailLoading" hide-overlay persistent width="300">
-      <v-card color="primary" dark>
-        <v-card-text class="pt-3">
-          数据加载中，请稍候...
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog light v-model="showDetail" fullscreen content-class="photo__detail--dialog"
-              transition="dialog-bottom-transition">
-      <v-toolbar dark color="primary">
-        <v-btn icon dark @click="closeDetail">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-btn dark text>
-            196 人点赞
-          </v-btn>
-          <v-btn dark text>
-            加入收藏夹
-          </v-btn>
-          <v-btn dark text>
-            免费下载
-          </v-btn>
-        </v-toolbar-items>
-      </v-toolbar>
-      <v-container class="mt-6">
-        <div class="detail__image--content">
-          <div>
-            <v-avatar size="128" class="mb-2">
-              <img src="https://images.pexels.com/users/avatars/894518/lola-russian-313.jpeg?auto=compress&fit=crop&h=256&w=256" alt="John">
-            </v-avatar>
-            <h3 class="mb-1 sub__name">
-              朱大肠
-              <v-icon color="primary">mdi-gender-male</v-icon>
-              <!--<v-icon color="pink">mdi-gender-female</v-icon>-->
-            </h3>
-            <div class="sub__info">
-            <span>
-              <v-icon>mdi-account-multiple-plus</v-icon>
-              45万人关注
-            </span>
-              <span>
-              <v-icon>mdi-map-marker-outline</v-icon>
-              广西·柳州
-            </span>
-            </div>
-            <div>
-              <v-btn small depressed color="success">
-                关注
-              </v-btn>
-              <v-btn small depressed color="secondary">
-                捐赠
-              </v-btn>
-            </div>
-          </div>
-          <div class="image__info mt-4">
-            <v-img :style="{maxWidth: 4256 / 4}" src="https://images.pexels.com/photos/1002536/pexels-photo-1002536.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"></v-img>
-          </div>
-        </div>
-      </v-container>
-    </v-dialog>
+    <!-- 弹出框（loading） -->
+    <image-viewer ref="image_viewer"/>
   </div>
 </template>
 <style src="../../assets/css/column_photos.scss" lang="scss"></style>
 <script>
+import imageViewer from '@/components/imageViewer/index'
 export default {
   name: "ColumnPhotos",
+  components: {
+    imageViewer
+  },
   props: {
     title: {
       type: String,
@@ -192,9 +129,7 @@ export default {
       ],
       showMore: false,
       loading: false,
-      loader: null,
-      showDetail: false,
-      showDetailLoading: false
+      loader: null
     }
   },
   mounted() {
@@ -269,15 +204,8 @@ export default {
       this.$emit("getData")
       this.showMore = false
     },
-    openDetail(id) {
-      this.showDetailLoading = true
-      setTimeout(() => {
-        this.showDetailLoading = false
-        this.showDetail = true
-      }, 1400)
-    },
-    closeDetail() {
-      this.showDetail = false
+    openDetail(row){
+      this.$refs.image_viewer.openDetail(row)
     }
   }
 }

@@ -7,6 +7,14 @@ import vuetify from '@/plugins/vuetify'
 import '@/assets/js/filter'
 import store from "@/store"
 
+import 'viewerjs/dist/viewer.css'
+import viewer from 'v-viewer'
+Vue.use(viewer,{
+  defaultOptions: {
+    zIndex: 2015
+  }
+})
+
 import '@/assets/css/index.scss'
 
 import scrollLoadMore from './directive/scrollDirective'
