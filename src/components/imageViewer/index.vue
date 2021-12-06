@@ -34,7 +34,7 @@
         </v-toolbar-items>
       </v-toolbar>
 
-      <v-container class="mt-6">
+      <v-container class="mt-6 detail__image">
         <div class="detail__image--content">
           <div>
             <v-avatar size="128" class="mb-2">
