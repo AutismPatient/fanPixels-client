@@ -54,7 +54,8 @@
     }
 
     .v-speed-dial {
-      text-align: end;
+      display: inline-block;
+      float: right;
       position: sticky;
     }
 

@@ -4,7 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title><%= webpackConfig.name %></title>
+    <style>
+      * ::-webkit-scrollbar{
+        width: 6px;
+        height: 10px;
+      }
+      * ::-webkit-scrollbar-button {
+        display: none;
+      }
+      * ::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 3px;
+      }
+      * ::-webkit-scrollbar-track {
+        background-color: rgba(0,0,0,.09);
+        border-radius: 3px;
+      }
+    </style>
   </head>
+
   <body>
     <div id="app"></div>
   </body>

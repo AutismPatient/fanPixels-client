@@ -15,7 +15,7 @@
       </v-card>
     </v-dialog>
     <!--主体-->
-    <v-dialog light v-model="showDetail" width="66%" persistent content-class="photo__detail--dialog">
+    <v-dialog style="border-radius: .8em" :retain-focus="false" light v-model="showDetail" width="66%" persistent content-class="photo__detail--dialog">
 
       <v-toolbar dark src="/static/images/vbanner.jpg">
         <v-btn icon @click="closeDetail">
@@ -96,7 +96,7 @@
                 </v-icon>
                 分享
               </v-btn>
-              <v-btn small depressed color="info">
+              <v-btn small depressed color="info" @click="showMore = true">
                 <v-icon small dense class="mr-1">
                   mdi-information-outline
                 </v-icon>
@@ -116,7 +116,7 @@
           <template v-slot:activator>
             <v-btn
               v-model="showFab"
-              color="blue darken-2"
+              color="primary"
               dark
               small
               fab
@@ -173,8 +173,35 @@
 
     </v-dialog>
 
-    <v-dialog light v-model="showMore" max-width="460px">
+    <v-dialog light v-model="showMore" max-width="700px">
+      <v-card>
+        <v-tabs
+          background-color="indigo"
+          dark
+        >
+          <v-tab>
+            Option
+          </v-tab>
+          <v-tab>
+            Another Selection
+          </v-tab>
+          <v-tab>
+            Items
+          </v-tab>
+          <v-tab>
+            Another Screen
+          </v-tab>
+        </v-tabs>
 
+        <v-card-actions>
+          <v-btn
+            color="primary"
+            @click="showMore = false"
+          >
+            关闭
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
   </div>
 </template>
@@ -228,12 +255,8 @@ export default {
       this.showDetail = false
     },
     viewImage() {
-      this.images.push(this.imageInfo.src)
       this.$viewerApi({
-        images: this.images,
-        hide() {
-          this.images = []
-        }
+        images: [this.imageInfo.src]
       })
     }
   }
