@@ -15,7 +15,8 @@
       </v-card>
     </v-dialog>
     <!--主体-->
-    <v-dialog style="border-radius: .8em" :retain-focus="false" light v-model="showDetail" width="66%" persistent content-class="photo__detail--dialog">
+    <v-dialog style="border-radius: .8em" :retain-focus="false" light v-model="showDetail" width="66%" persistent
+              content-class="photo__detail--dialog">
 
       <v-toolbar dark src="/static/images/vbanner.jpg">
         <v-btn icon @click="closeDetail">
@@ -130,12 +131,12 @@
             </v-btn>
           </template>
           <v-badge class="mr-2"
-            bordered
-            left
-            color="error"
-            content="99+"
-            offset-x="60"
-            offset-y="20"
+                   bordered
+                   left
+                   color="error"
+                   content="99+"
+                   offset-x="60"
+                   offset-y="20"
           >
             <v-btn
               fab
@@ -173,33 +174,61 @@
 
     </v-dialog>
 
-    <v-dialog light v-model="showMore" max-width="700px">
-      <v-card>
-        <v-tabs
-          background-color="indigo"
-          dark
-        >
-          <v-tab>
-            Option
+    <!--详细信息-->
+    <v-dialog light v-model="showMore" width="500px">
+      <v-card class="show__more--content">
+        <v-tabs background-color="indigo" dark v-model="tabValue" show-arrows>
+          <v-tab href="#tab-person">
+            摄影作者
           </v-tab>
-          <v-tab>
-            Another Selection
+          <v-tab href="#tab-photo">
+            图片信息
           </v-tab>
-          <v-tab>
-            Items
+          <v-tab href="#tab-statistics">
+            统计
           </v-tab>
-          <v-tab>
-            Another Screen
+          <v-tab href="#tab-licence">
+            许可证
           </v-tab>
+          <v-tabs-items v-model="tabValue">
+            <v-tab-item value="tab-person">
+              <div class="d-flex justify-space-between align-center">
+                <div class="show__more--author">
+                  <v-avatar size="62" class="mr-2">
+                    <v-img :src="authorInfo.avatar"/>
+                  </v-avatar>
+                  <div class="profile__text">
+                    <h3 class="profile__text--title">{{ authorInfo.fullName }}</h3>
+                    <h4 class="profile__text--subtitle">
+                      {{ authorInfo.focus }} 位关注者 · {{ authorInfo.region }}
+                    </h4>
+                  </div>
+                </div>
+                <div class="show__more--action">
+                  <v-btn small depressed>
+                    关注
+                  </v-btn>
+                  <v-btn small depressed>
+                    捐赠
+                  </v-btn>
+                </div>
+              </div>
+              <v-divider class="mt-5 mb-5"></v-divider>
+              <v-subheader>TA 拍摄的更多图片</v-subheader>
+            </v-tab-item>
+            <v-tab-item value="tab-photo">
+              <h1>图片信息</h1>
+            </v-tab-item>
+            <v-tab-item value="tab-statistics">
+              <h1>统计</h1>
+            </v-tab-item>
+            <v-tab-item value="tab-licence">
+              <h1>许可证</h1>
+            </v-tab-item>
+          </v-tabs-items>
         </v-tabs>
-
-        <v-card-actions>
-          <v-btn
-            color="primary"
-            @click="showMore = false"
-          >
-            关闭
-          </v-btn>
+        <v-card-actions class="justify-end">
+          <v-btn small text color="error" @click="tabClose">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -240,7 +269,8 @@ export default {
         free: true
       },
       showMore: false,
-      showFab: false
+      showFab: false,
+      tabValue: 'tab-person'
     }
   },
   methods: {
@@ -258,6 +288,10 @@ export default {
       this.$viewerApi({
         images: [this.imageInfo.src]
       })
+    },
+    tabClose(){
+      this.showMore = false
+      this.tabValue = 'tab-person'
     }
   }
 }

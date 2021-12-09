@@ -64,3 +64,14 @@
     }
   }
 }
+// 更多信息弹出框
+.show__more--content{
+  color: rgba(0,0,0,.6);
+  .v-tabs-items{
+    padding: 24px 16px;
+  }
+  .v-subheader{
+    padding-left: 0;
+    height: unset;
+  }
+}
