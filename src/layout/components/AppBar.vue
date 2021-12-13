@@ -2,21 +2,22 @@
   <div>
     <!--  导航栏  -->
     <v-app-bar app :flat="!showOffset && isOffset" light :absolute="!fixed" :fixed="fixed" :class="!showOffset && isOffset ? 'offset__class': ''"
-               :style="{backgroundColor: showOffset && isOffset ? '#fff':'transparent'}">
+               :style="{backgroundColor: showOffset && isOffset ? '#232a34':'transparent'}">
       <!--  LOGO   -->
       <a href="/">
         <span class="logo-text">FAN <br/> PIXELS</span>
       </a>
+      <SearchBar v-if="showOffset && isOffset" class="ml-8"/>
       <!--  间隔片  -->
       <v-spacer></v-spacer>
-      <SearchBar v-if="showOffset && isOffset"/>
-      <v-divider v-if="showOffset && isOffset" inset vertical class="mr-5 ml-5 mt-5" style="height: 16px"></v-divider>
+
+<!--      <v-divider v-if="showOffset && isOffset" inset vertical class="mr-5 ml-5 mt-5" style="height: 16px;background-color: white"></v-divider>-->
       <!--  右导航内容   -->
       <div class="app-bar--sub app-nav--content">
         <!--  探索      -->
         <v-menu transition="slide-y-transition" offset-y left open-on-hover>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text :color="!showOffset && isOffset ? 'white': 'secondary'" v-bind="attrs" v-on="on">
+            <v-btn text color="white" v-bind="attrs" v-on="on">
               探索
             </v-btn>
           </template>
@@ -53,7 +54,7 @@
         <!--  许可证      -->
         <v-menu transition="slide-y-transition" offset-y left open-on-hover>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" :color="!showOffset && isOffset ? 'white': 'secondary'">
+            <v-btn text v-bind="attrs" v-on="on" color="white">
               许可证
             </v-btn>
           </template>
@@ -73,7 +74,7 @@
         <!--  我的消息      -->
         <v-menu transition="slide-y-transition" offset-y left>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" icon :color="!showOffset && isOffset ? 'white': 'secondary'">
+            <v-btn text v-bind="attrs" v-on="on" icon color="white">
               <v-icon size="24">mdi-bell-badge-outline</v-icon>
             </v-btn>
           </template>
@@ -132,7 +133,7 @@
         <!--  系统设置      -->
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text icon @click="openSetting" v-bind="attrs" v-on="on" :color="!showOffset && isOffset ? 'white': 'secondary'">
+            <v-btn text icon @click="openSetting" v-bind="attrs" v-on="on" color="white">
               <v-icon size="24">mdi-cog-outline</v-icon>
             </v-btn>
           </template>
@@ -141,9 +142,9 @@
         <!--  个人信息      -->
         <v-menu transition="slide-y-transition" v-if="isLogin" offset-y left>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" icon :color="!showOffset && isOffset ? 'white': 'secondary'">
+            <v-btn text v-bind="attrs" v-on="on" icon color="white">
               <v-avatar
-                size="24"
+                size="24" class="border-2"
               ><img
                 src="https://images.pexels.com/users/avatars/3790863/zeyun-meng-696.jpeg?auto=compress&fit=crop&h=60&w=60"
                 alt="猪大肠"></v-avatar>

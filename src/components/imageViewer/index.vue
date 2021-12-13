@@ -17,7 +17,6 @@
     <!--主体-->
     <v-dialog style="border-radius: .8em" :retain-focus="false" light v-model="showDetail" width="66%" persistent
               content-class="photo__detail--dialog">
-
       <v-toolbar dark src="/static/images/vbanner.jpg">
         <v-btn icon @click="closeDetail">
           <v-icon>mdi-close</v-icon>
@@ -68,8 +67,7 @@
             </div>
           </div>
           <div class="image__info mt-4">
-            <v-img :max-width="imageInfo.style.width / shrink" :max-height="imageInfo.style.height / shrink"
-                   :lazy-src="imageInfo.lazySrc"
+            <v-img :max-width="imageInfo.style.width / shrink" :max-height="imageInfo.style.height / shrink" alt="点击放大" style="cursor: zoom-in"
                    :src="imageInfo.src" @click="viewImage">
             </v-img>
             <div class="sub__info image__info--sub mt-4">
@@ -171,7 +169,6 @@
           </v-btn>
         </v-speed-dial>
       </v-container>
-
     </v-dialog>
 
     <!--详细信息-->
@@ -270,16 +267,52 @@
               </v-list>
             </v-tab-item>
             <v-tab-item value="tab-statistics">
-              <h1>统计</h1>
+              <span class="text-h5">图片访问统计</span>
+              <v-subheader class="mt-3">最后更新： {{imageInfo.statistics.lastTime}}</v-subheader>
+              <v-list class="statistics__info">
+                <v-list-item class="pa-0">
+                  <v-list-item-content class="d-inline-block">
+                    <span>
+                      <v-icon size="14" style="color: inherit">
+                        mdi-eye
+                      </v-icon>
+                      {{imageInfo.statistics.views}}
+                    </span>
+                    <span>
+                      <v-icon size="14" style="color: inherit">
+                        mdi-download
+                      </v-icon>
+                      {{imageInfo.statistics.download}}
+                    </span>
+                    <span>
+                      <v-icon size="14" style="color: inherit">
+                        mdi-cards-heart
+                      </v-icon>
+                      {{imageInfo.statistics.likes}}
+                    </span>
+                  </v-list-item-content>
+                  <v-list-item-content class="text-right d-inline-block statistics__info--avatar">
+                    <v-avatar size="32" v-for="(v,i) in imageInfo.statistics.avatarImages" :key="v.uid">
+                      <v-img :src="v.src"/>
+                    </v-avatar>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
             </v-tab-item>
             <v-tab-item value="tab-licence">
-              <h1>许可证</h1>
+              <div v-if="imageInfo.free">
+                <v-subheader>✓ 免费使用</v-subheader>
+                <v-subheader>✓ 无需授权</v-subheader>
+              </div>
+              <div v-else>
+                <v-subheader style="color: red">× 作者授权使用</v-subheader>
+              </div>
+              <v-subheader class="mt-2 justify-center">
+                <a href="#" class="black--text text-decoration-underline">了解更多关于许可证的信息 »</a>
+              </v-subheader>
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
-        <!--        <v-card-actions class="justify-end">-->
-        <!--          <v-btn text @click="tabClose">关闭</v-btn>-->
-        <!--        </v-card-actions>-->
       </v-card>
     </v-dialog>
   </div>
@@ -352,7 +385,35 @@ export default {
         camera: 'Canon EOS 6D Mark II',
         shootTime: '2019年09月13日 15:23',
         wh: '2:3',
-        dpi: '3847px x 5771px'
+        dpi: '3847px x 5771px',
+        statistics: {
+          lastTime: '2021年12月13日 20:38',
+          views: '35.8K',
+          download: '12.2k',
+          likes: '451',
+          avatarImages: [
+            {
+              uid: 441556,
+              src: 'https://images.pexels.com/users/avatars/1225460/mike-liu-649.jpeg?auto=compress&fit=crop&h=256&w=256'
+            },
+            {
+              uid: 1456,
+              src: 'https://images.pexels.com/users/avatars/1051702/mohamed-alsheikh-863.jpeg?auto=compress&fit=crop&h=256&w=256'
+            },
+            {
+              uid: 2528757,
+              src: 'https://images.pexels.com/users/avatars/3420876/razu-ahmed-845.jpeg?auto=compress&fit=crop&h=256&w=256'
+            },
+            {
+              uid: 254242,
+              src: 'https://images.pexels.com/users/avatars/2016519/marlon-alves-910.jpeg?auto=compress&fit=crop&h=256&w=256'
+            },
+            {
+              uid: 35435,
+              src: 'https://images.pexels.com/users/avatars/50965724/andrew-kostyrskiy-723.jpeg?auto=compress&fit=crop&h=256&w=256'
+            }
+          ]
+        }
       },
       showMore: false,
       showFab: false,
