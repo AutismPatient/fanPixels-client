@@ -32,73 +32,43 @@
         border-radius: 0;
         margin-bottom: 1rem;
 
-        article {
-          position: relative;
-          display: block;
+        .photos__info {
+          height: 80px;
+          background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, transparent 100%);
+          border-bottom-left-radius: 2px;
+          border-bottom-right-radius: 2px;
+          color: #e8e8e8;
 
-          &:hover > .photos__info {
-            opacity: 1;
+          .author-info, .other-action {
+            padding-top: 24px;
+            padding-right: 18px;
           }
 
-          & > a {
-            position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
+          .author-info {
+            cursor: pointer;
+            padding-left: 18px;
 
-            & > img {
-              display: block;
-              width: 100%;
-              height: auto;
+            & > span {
+              font-size: 14px;
             }
           }
 
-          .photos__info {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 80px;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity .2s;
-            border-bottom-left-radius: 2px;
-            border-bottom-right-radius: 2px;
-            z-index: 2;
-            color: #e8e8e8;
+          .other-action {
+            .v-btn {
+              color: #dfdfdf;
 
-            .author-info, .other-action {
-              padding-top: 24px;
-              padding-right: 18px;
-            }
-
-            .author-info {
-              cursor: pointer;
-              padding-left: 18px;
-
-              & > span {
-                font-size: 14px;
+              &:hover {
+                color: white;
               }
             }
-
-            .other-action {
-              .v-btn {
-                color: #dfdfdf;
-
-                &:hover {
-                  color: white;
-                }
-              }
-            }
-
           }
+
         }
       }
     }
   }
 
+  // 加载器
   .photos__loading {
     width: 100%;
     text-align: center;
@@ -149,5 +119,4 @@
       }
     }
   }
-
 }

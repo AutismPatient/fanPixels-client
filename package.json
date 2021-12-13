@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "moment": "^2.29.1",
     "node-sass": "^4.0.0",
     "v-viewer": "^1.6.4",
     "vue": "^2.5.2",

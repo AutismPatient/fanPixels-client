@@ -15,6 +15,15 @@ Vue.use(viewer,{
   }
 })
 
+import ci from "@/components/customImage";
+Vue.use(ci)
+
+import moment from 'moment'
+
+Vue.prototype.$moment = moment
+
+moment.locale('zh-cn')
+
 import '@/assets/css/index.scss'
 
 import scrollLoadMore from './directive/scrollDirective'

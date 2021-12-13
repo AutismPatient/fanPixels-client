@@ -4,7 +4,11 @@
   </v-app>
 </template>
 <script>
+import {sayHello} from '@/assets/js/console'
 export default {
-  name: 'App'
+  name: 'App',
+  mounted() {
+    sayHello()
+  }
 }
 </script>

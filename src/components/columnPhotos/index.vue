@@ -31,11 +31,14 @@
       <!--  每一列(动态)  -->
       <div class="photos__column" v-for="(item,i) in columnPhotos" :key="i">
         <v-card v-for="(p,pi) in item.data" :key="pi">
-          <article @click="openDetail(p.title)"
-                   :style="{paddingTop: (p.image.height / p.image.width) * 100 + '%'}">
-            <a :style="{background: p.background}">
-              <img :src="p.image.url" :alt="p.title"/>
-            </a>
+          <!--          <article -->
+          <!--                   :style="{paddingTop: (p.image.height / p.image.width) * 100 + '%'}">-->
+          <!--            <a :style="{background: p.background}">-->
+          <!--              <img :src="p.image.url" :alt="p.title"/>-->
+          <!--            </a>-->
+          <!--          </article>-->
+          <custom-image @action="openDetail(p.title)" :width="p.image.width" :background="p.background"
+                        :image="{url: p.image.url}" :height="p.image.height">
             <div class="photos__info d-flex align-center justify-space-between">
               <div class="author-info">
                 <v-avatar size="30" class="mr-1">
@@ -55,7 +58,7 @@
                 </v-btn>
               </div>
             </div>
-          </article>
+          </custom-image>
         </v-card>
       </div>
     </div>
@@ -89,6 +92,7 @@
 <style src="../../assets/css/column_photos.scss" lang="scss"></style>
 <script>
 import imageViewer from '@/components/imageViewer/index'
+
 export default {
   name: "ColumnPhotos",
   components: {
@@ -139,7 +143,7 @@ export default {
   watch: {
     columns: {
       handler(newVal, oldVal) {
-        this.setColumnPhotosData(this.list, true)
+        this.setColumnPhotosData(this.list, false)
       }
     },
     list: {
@@ -204,7 +208,7 @@ export default {
       this.$emit("getData")
       this.showMore = false
     },
-    openDetail(row){
+    openDetail(row) {
       this.$refs.image_viewer.openDetail(row)
     }
   }

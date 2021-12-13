@@ -215,9 +215,59 @@
               </div>
               <v-divider class="mt-5 mb-5"></v-divider>
               <v-subheader>TA 拍摄的更多图片</v-subheader>
+              <div class="author_more__photo">
+                <custom-image v-for="(v,i) in authorInfo.moreImages" :key="v.id" no-preview :width="112" :height="80"
+                              :image="{url: v.src}"/>
+              </div>
             </v-tab-item>
             <v-tab-item value="tab-photo">
-              <h1>图片信息</h1>
+              <span class="text-h5">{{ imageInfo.title }}</span>
+              <v-subheader class="mt-3">上传日期：{{ $moment(imageInfo.uploadTime).format("YYYY年MM月DD日 HH:mm") }}
+              </v-subheader>
+              <v-list class="photo__more--list" max-width="380px">
+                <v-list-item>
+                  <v-list-item-content>镜头</v-list-item-content>
+                  <v-list-item-content>
+                    <span>{{ imageInfo.shot }}</span>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>大小</v-list-item-content>
+                  <v-list-item-content>
+                    <span>{{ imageInfo.size }}</span>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>分辨率</v-list-item-content>
+                  <v-list-item-content>
+                    <span>{{ imageInfo.dpi }}</span>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>使用相机</v-list-item-content>
+                  <v-list-item-content>
+                    <span>{{ imageInfo.camera }}</span>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>软件</v-list-item-content>
+                  <v-list-item-content>
+                    <span>{{ imageInfo.soft }}</span>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>拍摄时间</v-list-item-content>
+                  <v-list-item-content>
+                    <span>{{ imageInfo.shootTime }}</span>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>颜色</v-list-item-content>
+                  <v-list-item-content class="d-inline-block">
+                    <a :style="{background: v}" v-for="(v,i) in imageInfo.colors" :key="i"/>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
             </v-tab-item>
             <v-tab-item value="tab-statistics">
               <h1>统计</h1>
@@ -227,9 +277,9 @@
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
-        <v-card-actions class="justify-end">
-          <v-btn small text color="error" @click="tabClose">关闭</v-btn>
-        </v-card-actions>
+        <!--        <v-card-actions class="justify-end">-->
+        <!--          <v-btn text @click="tabClose">关闭</v-btn>-->
+        <!--        </v-card-actions>-->
       </v-card>
     </v-dialog>
   </div>
@@ -255,7 +305,33 @@ export default {
         sex: 1,
         avatar: 'https://images.pexels.com/users/avatars/894518/lola-russian-313.jpeg?auto=compress&fit=crop&h=256&w=256',
         focus: '45万',
-        region: '广西·柳州'
+        region: '广西·柳州',
+        moreImages: [
+          {
+            id: 74112,
+            src: "https://images.pexels.com/photos/3851969/pexels-photo-3851969.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            width: 500,
+            height: 324
+          },
+          {
+            id: 1145522,
+            src: "https://images.pexels.com/photos/3875481/pexels-photo-3875481.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            width: 500,
+            height: 324
+          },
+          {
+            id: 77441,
+            src: "https://images.pexels.com/photos/5268321/pexels-photo-5268321.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            width: 500,
+            height: 324
+          },
+          {
+            id: 11552,
+            src: "https://images.pexels.com/photos/3933432/pexels-photo-3933432.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            width: 500,
+            height: 324
+          }
+        ]
       },
       imageInfo: {
         src: 'https://images.pexels.com/photos/5102845/pexels-photo-5102845.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
@@ -266,7 +342,17 @@ export default {
         },
         views: '14.6 千',
         place: '广西壮族自治区南宁市宾阳县白鹤观观景台A',
-        free: true
+        free: true,
+        title: '女儿站在帆船上的女人',
+        uploadTime: new Date(),
+        size: '9.64 MB',
+        soft: 'Adobe Photoshop CC 2017 (Windows)',
+        colors: ['#000000', '#483d8b', '#696969', '#cd5c5c', '#d8bfd8'],
+        shot: '165.0mm ƒ/2.8 0.00625s ISO 200',
+        camera: 'Canon EOS 6D Mark II',
+        shootTime: '2019年09月13日 15:23',
+        wh: '2:3',
+        dpi: '3847px x 5771px'
       },
       showMore: false,
       showFab: false,
@@ -289,7 +375,7 @@ export default {
         images: [this.imageInfo.src]
       })
     },
-    tabClose(){
+    tabClose() {
       this.showMore = false
       this.tabValue = 'tab-person'
     }
