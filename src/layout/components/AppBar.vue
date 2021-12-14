@@ -1,7 +1,8 @@
 <template>
   <div>
     <!--  导航栏  -->
-    <v-app-bar app :flat="!showOffset && isOffset" light :absolute="!fixed" :fixed="fixed" :class="!showOffset && isOffset ? 'offset__class': ''"
+    <v-app-bar app :flat="!showOffset && isOffset" light :absolute="!fixed" :fixed="fixed"
+               :class="!showOffset && isOffset ? 'offset__class': ''"
                :style="{backgroundColor: showOffset && isOffset ? '#232a34':'transparent'}">
       <!--  LOGO   -->
       <a href="/">
@@ -11,7 +12,7 @@
       <!--  间隔片  -->
       <v-spacer></v-spacer>
 
-<!--      <v-divider v-if="showOffset && isOffset" inset vertical class="mr-5 ml-5 mt-5" style="height: 16px;background-color: white"></v-divider>-->
+      <!--      <v-divider v-if="showOffset && isOffset" inset vertical class="mr-5 ml-5 mt-5" style="height: 16px;background-color: white"></v-divider>-->
       <!--  右导航内容   -->
       <div class="app-bar--sub app-nav--content">
         <!--  探索      -->
@@ -172,7 +173,7 @@
         </v-menu>
 
         <!--  登录或上传内容    -->
-        <v-btn depressed color="primary" small class="ml-2">
+        <v-btn depressed color="primary" small class="ml-2" @click="openLogin">
           {{ loginText }}
         </v-btn>
       </div>
@@ -213,17 +214,21 @@
     </v-dialog>
     <!-- 系统设置导航抽屉   -->
     <NavBarSetting ref="setting"/>
+
+    <share ref="share" :info="{}"/>
   </div>
 </template>
 <style lang="scss" src="../../assets/css/app__bar.scss"></style>
 <script>
 import SearchBar from '@/components/search/SearchBar'
 import NavBarSetting from "@/layout/components/NavBarSetting"
+import share from '@/components/share/index'
 
 export default {
   name: "AppBar",
   components: {
-    SearchBar, NavBarSetting
+    SearchBar, NavBarSetting,
+    share
   },
   props: {
     fixed: { // 布局形式是否为 fixed 否则为 absolute
@@ -247,7 +252,7 @@ export default {
     isLogin: true,
     loginText: '上传内容',
     dialogMessage: false,
-    showOffset: false // 显示控制
+    showOffset: false, // 显示控制
   }),
   mounted() {
   },
@@ -260,6 +265,9 @@ export default {
     },
     closeOffset() {
       this.showOffset = false
+    },
+    openLogin() {
+      this.$refs['share'].showD()
     }
   }
 }

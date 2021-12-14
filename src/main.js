@@ -24,6 +24,9 @@ Vue.prototype.$moment = moment
 
 moment.locale('zh-cn')
 
+import login from '@/components/login/login'
+Vue.prototype.$login = login
+
 import '@/assets/css/index.scss'
 
 import scrollLoadMore from './directive/scrollDirective'

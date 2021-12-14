@@ -1,0 +1,41 @@
+.login__dialog {
+  position: relative;
+
+  .login__dialog--main {
+
+    height: 100%;
+    flex: 1 1 100%;
+    letter-spacing: normal;
+
+
+    & > div {
+      display: flex;
+      flex: 1 1;
+      overflow: hidden;
+    }
+  }
+
+  .login__dialog--action {
+    .text-h5{
+      font-weight: 700;
+    }
+    .login__dialog--action--external{
+      display: grid;
+      grid-auto-flow: column;
+      justify-content: space-around;
+      grid-row-gap: 8px;
+      padding: 8px 0;
+    }
+  }
+
+  .login__dialog--image {
+
+  }
+
+  .login__dialog--close-btn{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-align: end;
+  }
+}

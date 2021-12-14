@@ -1,23 +1,26 @@
 // 默认主题样式
-.fp-main .theme--light{
+.fp-main .theme--light {
   // logo 区
-  .logo-span{
+  .logo-span {
     //font-family: fantasy;
     font-size: 26px;
     font-family: fantasy;
     font-weight: bolder;
-    small{
+
+    small {
       font-size: 14px;
       margin-left: 2px;
       font-family: cursive;
     }
   }
-  .offset__class{
-    .logo-text{
+
+  .offset__class {
+    .logo-text {
 
     }
   }
-  .logo-text{
+
+  .logo-text {
     color: white;
     text-align: center;
     font-weight: 900;
@@ -26,47 +29,57 @@
     font-size: 1.4rem;
     line-height: 1;
   }
+
   // 右导航内容区
-  .app-bar--sub{
-    .text--secondary{
-      color: rgba(0,0,0,.6)!important;
+  .app-bar--sub {
+    .text--secondary {
+      color: rgba(0, 0, 0, .6) !important;
     }
   }
+
   // 弹出层
-  .app-bar--sub--list{
-    .v-subheader{
+  .app-bar--sub--list {
+    .v-subheader {
       height: 20px;
       padding: 14px 14px 14px 16px;
     }
-    .v-btn{
-      padding:0 8px;
+
+    .v-btn {
+      padding: 0 8px;
       justify-content: left;
     }
-    .v-list-item{
+
+    .v-list-item {
       padding: 0 8px;
     }
   }
-  .bar-msg{
-    .v-toolbar__title{
+
+  .bar-msg {
+    .v-toolbar__title {
       font-size: unset !important;
     }
-    .bar-msg--subtitle{
+
+    .bar-msg--subtitle {
       font-size: .75rem;
       color: burlywood;
     }
   }
-  .drawer_content{
-    .v-navigation-drawer__content{
-      .v-sheet--outlined.v-sheet--outlined{
+
+  .drawer_content {
+    .v-navigation-drawer__content {
+      .v-sheet--outlined.v-sheet--outlined {
         border: none !important;
-        border-bottom:1px solid rgba(0,0,0,.12)!important;
+        border-bottom: 1px solid rgba(0, 0, 0, .12) !important;
         box-shadow: none;
       }
     }
-    .drawer_content--sub--title{
+
+    .drawer_content--sub--title {
       .v-subheader {
         font-weight: bolder;
       }
     }
   }
 }
+
+

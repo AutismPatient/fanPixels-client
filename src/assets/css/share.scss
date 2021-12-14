@@ -1,0 +1,43 @@
+.share__dialog{
+  position: relative;
+  .share__dialog--close{
+    position: absolute;
+    left: 12px;
+    top: 12px;
+  }
+  .share__dialog--photo{
+    .share__btn{
+      display: grid;
+      grid-auto-flow: column;
+      justify-content: space-around;
+      grid-row-gap: 8px;
+      margin-top: 12px;
+      .share__btn-item{
+        text-align: center;
+        display: inline-block;
+        & > span{
+          display: block;
+          margin-top: .5rem;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 600;
+        }
+      }
+    }
+    .share__dialog--copy{
+      width: 100%;
+      padding: .6rem 1.15rem;
+      background: #e8e8e8;
+      border-radius: 4px;
+
+      .copy--title{
+        display: inline-block;
+        font-size: 16px;
+        line-height: 25px;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
