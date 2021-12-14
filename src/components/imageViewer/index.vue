@@ -137,7 +137,7 @@
                    offset-y="20"
           >
             <v-btn
-              fab
+              fab @click="openDownLoad"
               dark
               x-small
             >
@@ -315,12 +315,19 @@
         </v-tabs>
       </v-card>
     </v-dialog>
+
+    <!-- 下载弹出框 -->
+    <download ref="download"/>
   </div>
 </template>
 <style src="../../assets/css/image_viewer.scss" lang="scss"></style>
 <script>
+import download from '@/components/download/index'
 export default {
   name: "ImageViewer",
+  components: {
+    download
+  },
   props: {
     shrink: { // 图像收缩倍数
       type: Number,
@@ -439,6 +446,9 @@ export default {
     tabClose() {
       this.showMore = false
       this.tabValue = 'tab-person'
+    },
+    openDownLoad(){
+      this.$refs.download.showD()
     }
   }
 }
