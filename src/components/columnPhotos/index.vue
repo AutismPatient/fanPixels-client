@@ -70,7 +70,7 @@
         <div class="bounce3"></div>
       </div>
     </div>
-    <div v-else-if="showMore && !lazy" class="ma-4">
+    <div v-else-if="showMore && !lazy" class="ma-4 mr-0">
       <v-btn
         block
         :loading="loading"

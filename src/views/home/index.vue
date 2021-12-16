@@ -37,7 +37,7 @@
         </v-tabs>
       </div>
       <v-container class="mt-2">
-        <ColumnPhotos ref="column_photos" :lazy="false" :list="photos" @getData="getPhotos"/>
+        <ColumnPhotos ref="column_photos" :list="photos" @getData="getPhotos"/>
       </v-container>
     </div>
   </v-main>

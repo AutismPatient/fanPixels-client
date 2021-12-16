@@ -14,7 +14,10 @@
 import bar from './components/AppBar'
 export default {
   name: "CommonLayout",
-  components: {bar}
+  components: {bar},
+  methods: {
+
+  }
 }
 </script>
 
