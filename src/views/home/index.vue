@@ -37,7 +37,7 @@
         </v-tabs>
       </div>
       <v-container class="mt-2">
-        <ColumnPhotos ref="column_photos" :lazy="true" :list="photos" @getData="getPhotos"/>
+        <ColumnPhotos ref="column_photos" :lazy="false" :list="photos" @getData="getPhotos"/>
       </v-container>
     </div>
   </v-main>
@@ -168,6 +168,7 @@ export default {
       setTimeout(() => {
         let res = [
           {
+            id: Math.random().toString(36).substr(2),
             title: '女人抱着婴儿在海边',
             background: 'rgb(123,140,140)',
             image: {
@@ -177,6 +178,7 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
             title: '一只孤独的鸟站在绿色和干燥植物之间的沙地上',
             background: 'rgb(146,123,93)',
             image: {
@@ -186,6 +188,7 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
             title: '白色和蓝色的花裙子，戴着棕色草帽的女人',
             background: 'rgb(182,182,176)',
             image: {
@@ -195,6 +198,7 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
             title: '灰色圆领上衣的男人',
             background: 'rgb(146,140,134)',
             image: {
@@ -204,6 +208,7 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
             title: '女人靠在铁路上的选择性聚焦摄影',
             background: 'rgb(128,121,119)',
             image: {
@@ -213,6 +218,7 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
             title: '女人站在海岸线附近的沙滩上',
             background: 'rgb(172,142,121)',
             image: {
@@ -222,6 +228,7 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
             title: '女孩穿着豹子掩盖',
             background: 'rgb(148,152,167)',
             image: {
@@ -231,6 +238,7 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
             title: '白天躺在海边的红色垫子上的女人穿比基尼',
             background: 'rgb(190,175,154)',
             image: {
@@ -240,6 +248,7 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
             title: '几个站在海边',
             background: 'rgb(196,172,160)',
             image: {
@@ -249,6 +258,7 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
             title: '有关假期, 剪影, 地平線的免费素材图片',
             background: 'rgb(127,116,98)',
             image: {
@@ -258,6 +268,17 @@ export default {
             }
           },
           {
+            id: Math.random().toString(36).substr(2),
+            title: '多色的, 天空, 彩色的 的 免费素材图片',
+            background: 'rgb(142,126,110)',
+            image: {
+              url: 'https://images.pexels.com/photos/9866389/pexels-photo-9866389.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+              width: 3456,
+              height: 5184
+            }
+          },
+          {
+            id: Math.random().toString(36).substr(2),
             title: '人们走在沙滩线附近',
             background: 'rgb(143,154,151)',
             image: {

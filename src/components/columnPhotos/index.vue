@@ -1,7 +1,7 @@
 <!-- 通用瀑布流组件（响应式） -->
 <template>
   <div class="column__photos-main"
-       v-scroll-load-more="{ body: true,handle: scrollFunc, name: '.column__photos-main > .photos'}">
+       v-scroll-load-more="{ body: true,handle: scrollFunc, name: '.column__photos-main > .photos',percent: 0.8}">
     <v-row justify="space-between">
       <v-col md="4">
         <v-subheader>
@@ -143,14 +143,13 @@ export default {
   watch: {
     columns: {
       handler(newVal, oldVal) {
-        this.setColumnPhotosData(this.list, false)
+        this.resizeColumns(newVal, oldVal)
       }
     },
     list: {
       handler(newVal, oldVal) {
-        this.setColumnPhotosData(newVal, false)
-      },
-      deep: true
+        this.loadingMoreData(newVal)
+      }
     },
     clientWidth: {
       handler(n, o) {
@@ -159,25 +158,60 @@ export default {
     }
   },
   methods: {
-    setColumnPhotosData(data, clear) {
-      if (clear) {
-        this.columnPhotos = []
-      }
-      if (data.length > 0) {
-        let sum = Math.round(data.length / this.columns)
-        for (let i = 0; i < this.columns; i++) {
-          let addData = data.slice(i * sum, (i * sum) + sum)
-          let u = this.columnPhotos[i]
-          if (u) {
-            addData.forEach(i => {
-              u.data.push(i)
-            })
-          } else {
-            this.columnPhotos.push({
-              index: i,
-              data: addData
+    resizeColumns(newColumns, oldColumns) {
+      if (this.columnPhotos.length > 0) {
+        let magnify = newColumns - oldColumns > 0 // 是否为宽度增大模式，及从小到大
+        let dataCount = 0
+        this.columnPhotos.map(item => item.data).forEach(item => {
+          dataCount += item.length
+        })
+        if (magnify) {
+          let splitNum = Math.floor(dataCount / newColumns)
+          let addData = [] // 用于填补的数组（填补给新的列）
+          for (let i = 0; i < oldColumns; i++) {
+            let item = this.columnPhotos[i]
+            item.data.splice(splitNum, item.data.length - splitNum).forEach(i => {
+              addData.push(i)
             })
           }
+          this.columnPhotos[newColumns - 1] = {
+            index: newColumns - 1,
+            data: addData
+          }
+        } else {
+          let lastData = this.columnPhotos[this.columnPhotos.length - 1].data
+          let splitNum = Math.floor(lastData.length / newColumns)
+          for (let i = 0; i < newColumns; i++) {
+            let addData = lastData.splice(0, splitNum)
+            if (addData.length > 0) {
+              addData.forEach(item => {
+                this.columnPhotos[i].data.push(item)
+              })
+            }
+          }
+          if (lastData.length > 0) { // 仍有剩余，则填充给首列
+            lastData.forEach(item => {
+              this.columnPhotos[0].data.push(item)
+            })
+          }
+          this.columnPhotos.splice(newColumns, 1) // 删除最后一列
+        }
+      }
+    },
+    loadingMoreData(newVal) {
+      let sum = Math.round(newVal.length / this.columns)
+      for (let i = 0; i < this.columns; i++) {
+        let addData = newVal.slice(i * sum, (i * sum) + sum)
+        let u = this.columnPhotos[i]
+        if (u) {
+          addData.forEach(i => {
+            u.data.push(i)
+          })
+        } else {
+          this.columnPhotos.push({
+            index: i,
+            data: addData
+          })
         }
       }
     },
