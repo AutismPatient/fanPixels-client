@@ -67,7 +67,8 @@
             </div>
           </div>
           <div class="image__info mt-4">
-            <v-img :max-width="imageInfo.style.width / shrink" :max-height="imageInfo.style.height / shrink" alt="点击放大" style="cursor: zoom-in"
+            <v-img :max-width="imageInfo.style.width / shrink" :max-height="imageInfo.style.height / shrink" alt="点击放大"
+                   style="cursor: zoom-in"
                    :src="imageInfo.src" @click="viewImage">
             </v-img>
             <div class="sub__info image__info--sub mt-4">
@@ -89,8 +90,8 @@
             </span>
             </div>
             <div>
-              <v-btn small depressed>
-                <v-icon small dense class="mr-1">
+              <v-btn small depressed @click="openShare">
+                <v-icon small dense class="mr-1" >
                   mdi-share
                 </v-icon>
                 分享
@@ -168,6 +169,9 @@
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </v-speed-dial>
+        <v-container class="mt-4">
+          <column-photos :dom-body="false" dom=".detail__image" :sort-action="false" :lazy="false" @getData="getData" :list="res" title="类似图片"/>
+        </v-container>
       </v-container>
     </v-dialog>
 
@@ -268,7 +272,7 @@
             </v-tab-item>
             <v-tab-item value="tab-statistics">
               <span class="text-h5">图片访问统计</span>
-              <v-subheader class="mt-3">最后更新： {{imageInfo.statistics.lastTime}}</v-subheader>
+              <v-subheader class="mt-3">最后更新： {{ imageInfo.statistics.lastTime }}</v-subheader>
               <v-list class="statistics__info">
                 <v-list-item class="pa-0">
                   <v-list-item-content class="d-inline-block">
@@ -276,19 +280,19 @@
                       <v-icon size="14" style="color: inherit">
                         mdi-eye
                       </v-icon>
-                      {{imageInfo.statistics.views}}
+                      {{ imageInfo.statistics.views }}
                     </span>
                     <span>
                       <v-icon size="14" style="color: inherit">
                         mdi-download
                       </v-icon>
-                      {{imageInfo.statistics.download}}
+                      {{ imageInfo.statistics.download }}
                     </span>
                     <span>
                       <v-icon size="14" style="color: inherit">
                         mdi-cards-heart
                       </v-icon>
-                      {{imageInfo.statistics.likes}}
+                      {{ imageInfo.statistics.likes }}
                     </span>
                   </v-list-item-content>
                   <v-list-item-content class="text-right d-inline-block statistics__info--avatar">
@@ -318,15 +322,20 @@
 
     <!-- 下载弹出框 -->
     <download ref="download"/>
+
+    <share ref="share" :info="{}"/>
   </div>
 </template>
 <style src="../../assets/css/image_viewer.scss" lang="scss"></style>
 <script>
 import download from '@/components/download/index'
+import ColumnPhotos from '@/components/columnPhotos/index'
+import share from '@/components/share/index'
+
 export default {
   name: "ImageViewer",
   components: {
-    download
+    download, "column-photos": ColumnPhotos,share
   },
   props: {
     shrink: { // 图像收缩倍数
@@ -424,7 +433,17 @@ export default {
       },
       showMore: false,
       showFab: false,
-      tabValue: 'tab-person'
+      tabValue: 'tab-person',
+      res: []
+    }
+  },
+  watch: {
+    showDetail: {
+      handler(newVal, oldVal) {
+        if(newVal) {
+          this.open()
+        }
+      }
     }
   },
   methods: {
@@ -435,8 +454,72 @@ export default {
         this.showDetail = true
       }, 1400)
     },
+    getData() {
+      this.res = [
+        {
+          id: Math.random().toString(36).substr(2),
+          title: '女人抱着婴儿在海边',
+          background: 'rgb(123,140,140)',
+          image: {
+            url: 'https://images.pexels.com/photos/1002536/pexels-photo-1002536.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            width: 4256,
+            height: 2832
+          }
+        },
+        {
+          id: Math.random().toString(36).substr(2),
+          title: '一只孤独的鸟站在绿色和干燥植物之间的沙地上',
+          background: 'rgb(146,123,93)',
+          image: {
+            url: 'https://images.pexels.com/photos/3042612/pexels-photo-3042612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            width: 2624,
+            height: 3936
+          }
+        },
+        {
+          id: Math.random().toString(36).substr(2),
+          title: '白色和蓝色的花裙子，戴着棕色草帽的女人',
+          background: 'rgb(182,182,176)',
+          image: {
+            url: 'https://images.pexels.com/photos/3514426/pexels-photo-3514426.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            width: 5386,
+            height: 3591
+          }
+        },
+        {
+          id: Math.random().toString(36).substr(2),
+          title: '灰色圆领上衣的男人',
+          background: 'rgb(146,140,134)',
+          image: {
+            url: 'https://images.pexels.com/photos/2888150/pexels-photo-2888150.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            width: 6000,
+            height: 4000
+          }
+        },
+        {
+          id: Math.random().toString(36).substr(2),
+          title: '女人靠在铁路上的选择性聚焦摄影',
+          background: 'rgb(128,121,119)',
+          image: {
+            url: 'https://images.pexels.com/photos/2896820/pexels-photo-2896820.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            width: 2738,
+            height: 1825
+          }
+        },
+        {
+          id: Math.random().toString(36).substr(2),
+          title: '女人站在海岸线附近的沙滩上',
+          background: 'rgb(172,142,121)',
+          image: {
+            url: 'https://images.pexels.com/photos/320006/pexels-photo-320006.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            width: 4256,
+            height: 2832
+          }
+        }]
+    },
     closeDetail() {
       this.showDetail = false
+      this.res = []
     },
     viewImage() {
       this.$viewerApi({
@@ -447,8 +530,16 @@ export default {
       this.showMore = false
       this.tabValue = 'tab-person'
     },
-    openDownLoad(){
+    openDownLoad() {
       this.$refs.download.showD()
+    },
+    open(){
+      setTimeout(() => {
+        this.getData()
+      },2000)
+    },
+    openShare(){
+      this.$refs['share'].showD()
     }
   }
 }

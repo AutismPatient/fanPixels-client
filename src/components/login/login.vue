@@ -100,10 +100,10 @@ export default {
     }
   },
   methods: {
-    show(){
+    show() {
       this.showLogin = true
     },
-    hide(){
+    hide() {
       this.showLogin = false
       this.loginStep = 1
     }

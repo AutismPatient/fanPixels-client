@@ -17,7 +17,7 @@ export default function (el, binding) {
     // console.log('scrollTop:', scrollTop)
     // // 获取或者设置元素的偏移值,常用于, 计算滚动条的位置, 当一个元素的容器没有产生垂直方向的滚动条, 那它的scrollTop的值默认为0.
     // console.log('clientHeight:', clientHeight) // 读取元素的可见高度(只读)
-    // console.log('是否到达底部:', scrollHeight - scrollTop <= clientHeight)
+    console.log('是否到达底部:', scrollHeight - scrollTop <= clientHeight)
     if (scrollHeight - scrollTop <= (clientHeight / percent)) {
       binding.value.handle()
     }

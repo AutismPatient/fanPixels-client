@@ -215,20 +215,18 @@
     <!-- 系统设置导航抽屉   -->
     <NavBarSetting ref="setting"/>
 
-    <share ref="share" :info="{}"/>
+    <login ref="login"/>
   </div>
 </template>
 <style lang="scss" src="../../assets/css/app__bar.scss"></style>
 <script>
 import SearchBar from '@/components/search/SearchBar'
 import NavBarSetting from "@/layout/components/NavBarSetting"
-import share from '@/components/share/index'
 
 export default {
   name: "AppBar",
   components: {
-    SearchBar, NavBarSetting,
-    share
+    SearchBar, NavBarSetting
   },
   props: {
     fixed: { // 布局形式是否为 fixed 否则为 absolute
@@ -267,7 +265,7 @@ export default {
       this.showOffset = false
     },
     openLogin() {
-      this.$refs['share'].showD()
+      this.$refs['login'].show()
     }
   }
 }

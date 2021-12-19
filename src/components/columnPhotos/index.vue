@@ -1,14 +1,14 @@
 <!-- 通用瀑布流组件（响应式） -->
 <template>
   <div class="column__photos-main"
-       v-scroll-load-more="{ body: true,handle: scrollFunc, name: '.column__photos-main > .photos',percent: 0.8}">
+       v-scroll-load-more="{ body: false,handle: scrollFunc, name: '.column__photos-main > .photos',percent: 0.8}">
     <v-row justify="space-between">
       <v-col md="4">
         <v-subheader>
           {{ title }}
         </v-subheader>
       </v-col>
-      <v-col md="4" class="text-right">
+      <v-col md="4" v-if="sortAction" class="text-right">
         <v-menu rounded="0">
           <template v-slot:activator="{on,attr}">
             <v-btn text v-on="on" v-bind="attr" tile>
@@ -70,7 +70,7 @@
         <div class="bounce3"></div>
       </div>
     </div>
-    <div v-else-if="showMore && !lazy" class="ma-4 mr-0">
+    <div v-else-if="!lazy && this.columnPhotos.length > 0" class="ma-4 mr-0">
       <v-btn
         block
         :loading="loading"
@@ -86,17 +86,16 @@
     </div>
 
     <!-- 弹出框（loading） -->
-    <image-viewer ref="image_viewer"/>
+    <ImageViewer ref="image_viewer"/>
   </div>
 </template>
 <style src="../../assets/css/column_photos.scss" lang="scss"></style>
 <script>
-import imageViewer from '@/components/imageViewer/index'
 
 export default {
   name: "ColumnPhotos",
   components: {
-    imageViewer
+    ImageViewer: () => import('@/components/imageViewer/index')
   },
   props: {
     title: {
@@ -110,6 +109,18 @@ export default {
     list: {
       type: Array,
       default: () => []
+    },
+    sortAction: {
+      type: Boolean,
+      default: true
+    },
+    domBody: { // 检测是否需要body来注册 resize 事件
+      type: Boolean,
+      default: true
+    },
+    dom: { // 当 domBody 为 false 时 请提供 dom
+      type: String,
+      default: ''
     }
   },
   data: () => {
@@ -137,6 +148,14 @@ export default {
     }
   },
   mounted() {
+    if(!this.domBody){
+      let dom = document.querySelector('.photo__detail--dialog')
+      for(let key  in dom){
+        console.log(key + '---' + dom[key])
+      }
+      this.clientWidth = dom.getBoundingClientRect().width
+    }
+    console.log(this.clientWidth)
     this.judgeWidth(this.clientWidth)
     window.addEventListener('resize', this.onResize)
   },
@@ -216,6 +235,7 @@ export default {
       }
     },
     onResize(e) {
+      console.log(e)
       this.clientWidth = document.body.clientWidth
     },
     judgeWidth(w) {
